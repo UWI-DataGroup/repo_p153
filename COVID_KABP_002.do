@@ -185,6 +185,132 @@ label value work_home q0024
 *Study from home due to COVID
 rename q0025 study_home
 
+//Essential workers
+*Health workers
+rename q0028 health_worker
+*Essential worker
+rename q0029 essential_worker
+
+*Chronic Health conditions
+gen health_condition = .
+replace health_condition = 6 if q0031_0002 == 1 // Eye condititon
+replace health_condition = 6 if q0031_0003 == 1 // Ear, nose and/ throat condition
+replace health_condition = 5 if q0031_0004 == 1 // Cancer
+replace health_condition = 6 if q0031_0005 == 1 // Epilepsy/Seizue
+replace health_condition = 3 if q0031_0006 == 1 // Stroke
+replace health_condition = 2 if q0031_0007 == 1 // Hypertension
+replace health_condition = 3 if q0031_0008 == 1 // Heart disease
+replace health_condition = 4 if q0031_0009 == 1 // Asthma
+replace health_condition = 4 if q0031_0010 == 1 // Empysema, bronchitis
+replace health_condition = 4 if q0031_0011 == 1 // Tuberculosis
+replace health_condition = 6 if q0031_0012 == 1 // Thyroid glands
+replace health_condition = 1 if q0031_0013 == 1 // Diabetes
+replace health_condition = 6 if q0031_0014 == 1 // Hyperlipidemia
+replace health_condition = 6 if q0031_0015 == 1 // Kidney condition
+replace health_condition = 6 if q0031_0016 == 1 // Liver condition
+replace health_condition = 6 if q0031_0017 == 1 // Bowel condition
+replace health_condition = 6 if q0031_0018 == 1 // Anaemia
+replace health_condition = 6 if q0031_0019 == 1 // Genetic blood disorder
+replace health_condition = 6 if q0031_0020 == 1 // Skelettomuscular disorder
+replace health_condition = 6 if q0031_0021 == 1 // Autoimmune disorder
+replace health_condition = 6 if q0031_0022 == 1 // Skin coniditon
+replace health_condition = 7 if q0031_0023 == 1 // Depression
+replace health_condition = 7 if q0031_0024 == 1 // Anxiety
+replace health_condition = 7 if q0031_0025 == 1 // Schizophrenia
+replace health_condition = 6 if q0031_0028 == 1 // Other
+label var health_condition "Health coniditions"
+label define health_condition 1 "Diabetes" ///
+							  2 "Hypertension" ///
+							  3 "Heart Disease" ///
+							  4 "Respiratory Disease" ///
+							  5 "Cancer" ///
+							  6 "Other" ///
+							  7 "Mental Disease"
+label value health_condition health_condition
+
+//Heart Disease
+gen heart_disease = .
+replace heart_disease = 1 if q0031_0006 == 1 // Stroke
+replace heart_disease = 1 if q0031_0008 == 1 // Heart disease
+label var heart_disease "Heart Disease"
+label define heart_disease 1 "Heart Disease"
+label value heart_disease heart_disease
+
+//Diabetes
+gen diabetes = .
+replace diabetes = 1 if q0031_0013 == 1 // Diabetes
+label var diabetes "Diabetes"
+label define diabetes 1 "Diabetes"
+label value diabetes diabetes
+
+//Hypertension
+gen hypertension = .
+replace hypertension = 1 if q0031_0007 == 1 // Hypertension
+label var hypertension "Hypertension"
+label define hypertension 1 "Hypertension"
+label value hypertension hypertension
+
+//Respiratory Disease
+gen resp_disease = .
+replace resp_disease = 1 if q0031_0010 == 1 // Empysema, bronchitis
+replace resp_disease = 1 if q0031_0011 == 1 // Tuberculosis
+replace resp_disease = 1 if q0031_0009 == 1 // Asthma
+label var resp_disease "Respiratory Disease"
+label define resp_disease 1 "Respiratory Disease"
+label value resp_disease resp_disease
+
+//Cancer
+gen cancer = .
+replace cancer = 1 if q0031_0004 == 1 // Cancer
+label var cancer "Cancer"
+label define cancer 1"Cancer"
+label value cancer cancer
+
+// Mental Health Disease
+gen men_disease = .
+replace men_disease = 1 if q0031_0023 == 1 // Depression
+replace men_disease = 1 if q0031_0024 == 1 // Anxiety
+replace men_disease = 1 if q0031_0025 == 1 // Schizophrenia
+label var men_disease "Mental Health Disease"
+label define men_disease 1" Mental Health Disease"
+label value men_disease men_disease
+
+//Other Disease
+gen other_disease = .
+replace other_disease = 1 if q0031_0002 == 1 // Eye condititon
+replace other_disease = 1 if q0031_0003 == 1 // Ear, nose and/ throat condition
+replace other_disease = 1 if q0031_0005 == 1 // Epilepsy/Seizue
+replace other_disease = 1 if q0031_0012 == 1 // Thyroid glands
+replace other_disease = 1 if q0031_0014 == 1 // Hyperlipidemia
+replace other_disease = 1 if q0031_0015 == 1 // Kidney condition
+replace other_disease = 1 if q0031_0016 == 1 // Liver condition
+replace other_disease = 1 if q0031_0017 == 1 // Bowel condition
+replace other_disease = 1 if q0031_0018 == 1 // Anaemia
+replace other_disease = 1 if q0031_0019 == 1 // Genetic blood disorder
+replace other_disease = 1 if q0031_0020 == 1 // Skelettomuscular disorder
+replace other_disease = 1 if q0031_0021 == 1 // Autoimmune disorder
+replace other_disease = 1 if q0031_0022 == 1 // Skin coniditon
+replace other_disease = 1 if q0031_0028 == 1 // Other
+label var other_disease "Other health condition"
+label define other_disease 1 "Other"
+label value other_disease other_disease
+
+*Note: Should q0033 be analyzed?
+
+*Worried about COVID-19
+rename q0048 worried_covid
+
+*Would like to be tested
+rename q0050 test_interest
+
+*Likely to be infected 
+rename q0052 likely_infected
+
+*Infection expectation
+rename q0053 expect_infected
+
+*Method of virus transmission (q0054)
+
 *clear screen for focus on result only
 cls			  
 *Overall Descriptives
@@ -202,3 +328,12 @@ tab job_loss
 tab save_bills
 tab work_home
 tab study_home
+tab health_worker
+tab essential_worker
+tab health_condition
+tab1 diabetes hypertension heart_disease resp_disease cancer ///
+	 men_disease other_disease
+tab worried_covid
+tab test_interest
+tab likely_infected
+tab expect_infected
