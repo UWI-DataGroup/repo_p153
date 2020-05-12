@@ -32,18 +32,28 @@ MAC OS
 */
 
 
-*Setting working directory
-** Dataset to encrypted location
+*Setting working directories
 
 *WINDOWS OS
+**Datasets to encrypted folder
 *local datapath "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
+**Graph outputs to encrypted folder
 *local outputpath "X:/The University of the West Indies/DataGroup - repo_data/data_p153/version01/3-output"
 *cd "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
 
 *MAC OS
-local datapath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
-local outputpath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153/version01/3-output"
-cd "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
+**Datasets to encrypted folder
+*local datapath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
+**Logfiles to unencrypted folder
+*local logpath "/Volumes/Secomba/kernrocke/Boxcryptor/OneDrive - The University of the West Indies/Github Repositories/repo_p153"
+**Graph outputs to encrypted folder
+*local outputpath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153/version01/3-output"
+*cd "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
+
+** Close any open log files and open new log file
+capture log close
+log using "`logpath'/COVID_BIM_KABP_Descriptives", replace
+
 
 *Load in data from encrypted location
 use "`datapath'/version01/1-input/BarbadosCovid19_KABP.dta", clear
@@ -309,12 +319,26 @@ rename q0052 likely_infected
 *Infection expectation
 rename q0053 expect_infected
 
-*Method of virus transmission (q0054)
+*Method of virus transmission
+foreach x in q0054_0001 q0054_0002 q0054_0003 q0054_0004 q0054_0005 q0054_0006 ///
+			 q0054_0007 q0054_0008 q0054_0009 q0054_0010 q0054_0011 {
 
+recode `x' (1/2 =1) (4/5=2) (3=3) (6=4)
+label define `x'       1 "Likely"  ///
+					   2 "Unlikely"  ///
+					   3 "Neither likely or unlikely" ///
+					   4 "Don't know", modify
+label value `x' `x'
+}
+
+*PCOVID-19 Bioweapon
+rename q0081 covid_bio
+
+*-------------------------------------------------------------------------------
 *clear screen for focus on result only
 cls			  
 *Overall Descriptives
-tabstat age, stat(mean median min max) col(stat)
+tabstat age, stat(mean median min max) col(stat) format (%9.0f)
 tab agegrp
 tab sex
 tab education
@@ -337,3 +361,98 @@ tab worried_covid
 tab test_interest
 tab likely_infected
 tab expect_infected
+*Method of virus transmission
+tab1 q0054_0001 q0054_0002 q0054_0003 q0054_0004 q0054_0005 q0054_0006 ///
+	 q0054_0007 q0054_0008 q0054_0009 q0054_0010 q0054_0011
+*Protect against COVID-19
+tab1 q0055_0001	q0055_0002 q0055_0003 q0055_0004 q0055_0005 q0055_0006 q0055_0007  ///
+	 q0055_0008	q0055_0009 q0055_0010 q0055_0011 q0055_0012 q0055_0013 q0055_0014  ///
+	 q0055_0015	q0055_0016 q0055_0017 q0055_0018 q0055_0019 q0055_0020 q0055_0021  ///
+	 q0055_0022	q0055_0023 q0055_0024 
+*Self-Isolate ability and willingness
+tab1 q0056_0001 q0056_0002
+*Lockdown preparation
+tab1 q0057_0001 q0057_0002 q0057_0003 q0057_0004 q0057_0005 q0057_0006 q0057_0007 ///
+	 q0057_0008
+*Lockdown problems
+tab1 q0058_0001 q0058_0002 q0058_0003 q0058_0004 q0058_0005 q0058_0006 q0058_0007 ///
+	 q0058_0008 q0058_0009 q0058_0010 
+*Experiences due to COVID-19
+tab1 q0060_0001 q0060_0002 q0060_0003 q0060_0004 q0060_0005 q0060_0006 q0060_0007 ///
+	 q0060_0008 q0060_0009 q0060_0010 	
+*Information Source on COVID-19
+tab1 q0079_0001 q0079_0002 q0079_0003 q0079_0004 q0079_0005 q0079_0006 q0079_0007 ///
+	 q0079_0008 q0079_0009 q0079_0010 q0079_0011 q0079_0012 q0079_0013 q0079_0014
+*Types of information on COVID-19 would like to receive	 
+tab1 q0080_0001 q0080_0002 q0080_0003 q0080_0004 q0080_0005 q0080_0006 q0080_0007 ///
+	 q0080_0008 q0080_0009 q0080_0010 q0080_0011 q0080_0012 q0080_0013 q0080_0014 ///
+	 q0080_0015
+*COVID-19 Bioweapon
+tab covid_bio
+
+*------------------------------------------------------------------------------- 
+*Cross-tabulations with sex
+
+*Age
+tabstat age, by(sex) stat(mean median min max) col(stat) format (%9.0f)
+
+foreach a in agegrp education ethnic religion employment parent_child q0020_0001 ///
+			 q0020_0002 q0020_0003 q0020_0004 q0020_0005 q0020_0006 q0020_0007 ///
+			 q0020_0008 job_loss save_bills work_home study_home health_worker ///
+			 essential_worker health_condition diabetes hypertension heart_disease ///
+			 resp_disease cancer men_disease other_disease worried_covid test_interest ///
+			 likely_infected expect_infected q0054_0001 q0054_0002 q0054_0003 q0054_0004 ///
+			 q0054_0005 q0054_0006 q0054_0007 q0054_0008 q0054_0009 q0054_0010 q0054_0011 ///
+			 q0055_0001 q0055_0002 q0055_0003 q0055_0004 q0055_0005 q0055_0006 q0055_0007 ///
+			 q0055_0008 q0055_0009 q0055_0010 q0055_0011 q0055_0012 q0055_0013 q0055_0014 ///
+			 q0055_0015 q0055_0016 q0055_0017 q0055_0018 q0055_0019 q0055_0020 q0055_0021 ///
+			 q0055_0022 q0055_0023 q0055_0024 q0056_0001 q0056_0002 q0057_0001 q0057_0002 ///
+			 q0057_0003 q0057_0004 q0057_0005 q0057_0006 q0057_0007 q0057_0008 q0058_0001 ///
+			 q0058_0002 q0058_0003 q0058_0004 q0058_0005 q0058_0006 q0058_0007 q0058_0008 ///
+			 q0058_0009 q0058_0010 q0060_0001 q0060_0002 q0060_0003 q0060_0004 q0060_0005 ///
+			 q0060_0006 q0060_0007 q0060_0008 q0060_0009 q0060_0010 q0079_0001 q0079_0002 ///
+			 q0079_0003 q0079_0004 q0079_0005 q0079_0006 q0079_0007 q0079_0008 q0079_0009 ///
+			 q0079_0010 q0079_0011 q0079_0012 q0079_0013 q0079_0014 q0080_0001 q0080_0002 ///
+			 q0080_0003 q0080_0004 q0080_0005 q0080_0006 q0080_0007 q0080_0008 q0080_0009 ///
+			 q0080_0010 q0080_0011 q0080_0012 q0080_0013 q0080_0014 q0080_0015 ///
+			 covid_bio {
+			 
+			 tab `a' sex, col
+			 
+			 }
+*-------------------------------------------------------------------------------	 
+*Cross-tabulations with age group (10 year bands)
+
+*Age
+tabstat age, by(agegrp) stat(mean median min max) col(stat) format (%9.0f)
+
+foreach a in sex education ethnic religion employment parent_child q0020_0001 ///
+			 q0020_0002 q0020_0003 q0020_0004 q0020_0005 q0020_0006 q0020_0007 ///
+			 q0020_0008 job_loss save_bills work_home study_home health_worker ///
+			 essential_worker health_condition diabetes hypertension heart_disease ///
+			 resp_disease cancer men_disease other_disease worried_covid test_interest ///
+			 likely_infected expect_infected q0054_0001 q0054_0002 q0054_0003 q0054_0004 ///
+			 q0054_0005 q0054_0006 q0054_0007 q0054_0008 q0054_0009 q0054_0010 q0054_0011 ///
+			 q0055_0001 q0055_0002 q0055_0003 q0055_0004 q0055_0005 q0055_0006 q0055_0007 ///
+			 q0055_0008 q0055_0009 q0055_0010 q0055_0011 q0055_0012 q0055_0013 q0055_0014 ///
+			 q0055_0015 q0055_0016 q0055_0017 q0055_0018 q0055_0019 q0055_0020 q0055_0021 ///
+			 q0055_0022 q0055_0023 q0055_0024 q0056_0001 q0056_0002 q0057_0001 q0057_0002 ///
+			 q0057_0003 q0057_0004 q0057_0005 q0057_0006 q0057_0007 q0057_0008 q0058_0001 ///
+			 q0058_0002 q0058_0003 q0058_0004 q0058_0005 q0058_0006 q0058_0007 q0058_0008 ///
+			 q0058_0009 q0058_0010 q0060_0001 q0060_0002 q0060_0003 q0060_0004 q0060_0005 ///
+			 q0060_0006 q0060_0007 q0060_0008 q0060_0009 q0060_0010 q0079_0001 q0079_0002 ///
+			 q0079_0003 q0079_0004 q0079_0005 q0079_0006 q0079_0007 q0079_0008 q0079_0009 ///
+			 q0079_0010 q0079_0011 q0079_0012 q0079_0013 q0079_0014 q0080_0001 q0080_0002 ///
+			 q0080_0003 q0080_0004 q0080_0005 q0080_0006 q0080_0007 q0080_0008 q0080_0009 ///
+			 q0080_0010 q0080_0011 q0080_0012 q0080_0013 q0080_0014 q0080_0015 ///
+			 covid_bio {
+			 
+			 tab `a' agegrp, col
+			 
+			 }
+*-------------------------------------------------------------------------------	 
+log close
+	 
+	 
+	 
+	 
