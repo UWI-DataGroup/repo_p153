@@ -36,10 +36,10 @@ MAC OS
 
 *WINDOWS OS
 **Datasets to encrypted folder
-*local datapath "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
+local datapath "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
 **Graph outputs to encrypted folder
-*local outputpath "X:/The University of the West Indies/DataGroup - repo_data/data_p153/version01/3-output"
-*cd "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
+local outputpath "X:/The University of the West Indies/DataGroup - repo_data/data_p153/version01/3-output"
+cd "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
 
 *MAC OS
 **Datasets to encrypted folder
@@ -52,7 +52,7 @@ MAC OS
 
 ** Close any open log files and open new log file
 capture log close
-log using "`logpath'/COVID_BIM_KABP_Descriptives", replace
+*log using "`logpath'/COVID_BIM_KABP_Descriptives", replace
 
 
 *Load in data from encrypted location
@@ -106,7 +106,8 @@ replace education = 4 if q0012 == 6 //University
 label var education "Education"
 label define education 1"Primary/less" 2"Secondary" 3"Polytechnic/BCC" 4"University"
 label value education education
-*How should we deal with q0012_other [other education]
+*How should we deal with q0012_other [other education]   CH: there are 196 text entries that could be backcoded, but I don't think we should have to do that now. ///
+I think it could have been avoided if the wording was more clear (e.g. stressed highest completed level). I will make a note when we present results
 
 *Ethnicity
 gen ethnic = . 
@@ -172,7 +173,7 @@ label define parent_child 1 "Under 6 months old" ///
 						  5 "11 years to 15 years old" ///
 						  6 "16 years to 18 years old" ///
 						  7 "Older than 18" ///
-						  8 "I do not have children"
+						  8 "I do not have children" 
 label value parent_child parent_child
 *Note: This question is multiple response and may need to be treated differently
 
@@ -228,6 +229,7 @@ replace health_condition = 7 if q0031_0023 == 1 // Depression
 replace health_condition = 7 if q0031_0024 == 1 // Anxiety
 replace health_condition = 7 if q0031_0025 == 1 // Schizophrenia
 replace health_condition = 6 if q0031_0028 == 1 // Other
+replace health_condition = 8 if q0031_0001 == 1 // No health condition
 label var health_condition "Health coniditions"
 label define health_condition 1 "Diabetes" ///
 							  2 "Hypertension" ///
@@ -235,7 +237,8 @@ label define health_condition 1 "Diabetes" ///
 							  4 "Respiratory Disease" ///
 							  5 "Cancer" ///
 							  6 "Other" ///
-							  7 "Mental Disease"
+							  7 "Mental Disease" ///
+							  8 "No chronic conditions"
 label value health_condition health_condition
 
 //Heart Disease
@@ -331,6 +334,63 @@ label define `x'       1 "Likely"  ///
 label value `x' `x'
 }
 
+*lockdown experience
+gen lockexp=.
+replace lockexp=1 if q0058_0001 !=. // It has affected my mental health
+replace lockexp=2 if q0058_0002 !=. // I find it difficult to find my own space in my household
+replace lockexp=3 if q0058_0003 !=. // I find it difficult to get supplies, (e.g. food, medicines, etc.)
+replace lockexp=4 if q0058_0004 !=. // I am caring for others and cannot find someone to help out 
+replace lockexp=5 if q0058_0005 !=. // It has affected my social life
+replace lockexp=6 if q0058_0006 !=. // I have less money
+replace lockexp=7 if q0058_0007 !=. // My studies or education has suffered
+replace lockexp=8 if q0058_0008 !=. // Don't know
+replace lockexp=9 if q0058_0009 !=. // No problem 
+replace lockexp=10 if q0058_0010 !=. // Other
+label variable lockexp "lockdown problems"
+label define lockexp 1 "mental health" 2 "Space in household" 3 "Obtaining supplies" 4 "Carer with no help" 5 "Social life" 6 "financial" 7 "Impact on education" 8 "don't know" 9 "No problems" 10 "Other"
+label values lockexp lockexp 
+
+*Sources of information
+gen infosource=.
+replace infosource=1 if q0079_0001 !=. 
+replace infosource=2 if q0079_0002 !=. 
+replace infosource=3 if q0079_0003 !=. 
+replace infosource=4 if q0079_0004 !=. 
+replace infosource=5 if q0079_0005 !=. 
+replace infosource=6 if q0079_0006 !=. 
+replace infosource=7 if q0079_0007 !=. 
+replace infosource=8 if q0079_0008 !=.
+replace infosource=9 if q0079_0009 !=. 
+replace infosource=10 if q0079_0010 !=. 
+replace infosource=11 if q0079_0011 !=.  
+replace infosource=12 if q0079_0012 !=.
+replace infosource=13 if q0079_0013 !=. 
+label variable infosource "Source of COVID information"
+label define infosource 1 "newspaper" 2 "magazine" 3 "radio" 4 "CBC" 5 "International TV" 6 "Official websites" 7 "Unofficial websites" 8 "social media" 9 "My doctor" 10 "Other healthcare professional" 11 "family or friends" 12 "work or school" 13 "No information"
+label values infosource infosource 
+
+*Preference for information
+gen infopref=.
+replace infopref=1 if q0080_0001 !=. 
+replace infopref=2 if q0080_0002 !=. 
+replace infopref=3 if q0080_0003 !=. 
+replace infopref=4 if q0080_0004 !=.  
+replace infopref=5 if q0080_0005 !=. 
+replace infopref=6 if q0080_0006 !=. 
+replace infopref=7 if q0080_0007 !=. 
+replace infopref=8 if q0080_0008 !=. 
+replace infopref=9 if q0080_0009 !=. 
+replace infopref=10 if q0080_0010 !=. 
+replace infopref=11 if q0080_0011 !=. 
+replace infopref=12 if q0080_0012 !=. 
+replace infopref=13 if q0080_0013 !=. 
+replace infopref=14 if q0080_0014 !=. 
+label variable infopref "Preference for information"
+label define infopref 1 "Research" 2 "Common signs" 3 "Less common signs" 4 "How to know if infected" 5 "Info on transmission" 6 "Info on prevention" 7 "High risk groups" 8 "Number of cases (Barbados)" 9 "Distribution cases (Bds)" 10 "Infection risk (Bds)" 11 "NPIs (Bds)" 12 "NPIs (Other countries)" 13 "NPIs (international organisations)" 14 "don't want info"
+label values infopref infopref 
+
+
+
 *PCOVID-19 Bioweapon
 rename q0081 covid_bio
 
@@ -339,28 +399,28 @@ rename q0081 covid_bio
 cls			  
 *Overall Descriptives
 tabstat age, stat(mean median min max) col(stat) format (%9.0f)
-tab agegrp
-tab sex
-tab education
-tab ethnic
-tab religion
-tab employment
-tab parent_child
+tab agegrp, miss
+tab sex, miss 
+tab education, miss
+tab ethnic, miss 
+tab religion, miss
+tab employment, miss 
+tab parent_child, miss 
 tab1 q0020_0001 q0020_0002 q0020_0003 q0020_0004 q0020_0005 q0020_0006 ///
 	 q0020_0007 q0020_0008
-tab job_loss
-tab save_bills
-tab work_home
-tab study_home
-tab health_worker
-tab essential_worker
-tab health_condition
+tab job_loss, miss 
+tab save_bills, miss 
+tab work_home, miss 
+tab study_home, miss 
+tab health_worker, miss 
+tab essential_worker, miss 
+tab health_condition, miss
 tab1 diabetes hypertension heart_disease resp_disease cancer ///
 	 men_disease other_disease
-tab worried_covid
-tab test_interest
-tab likely_infected
-tab expect_infected
+tab worried_covid, miss 
+tab test_interest, miss 
+tab likely_infected, miss 
+tab expect_infected, miss 
 *Method of virus transmission
 tab1 q0054_0001 q0054_0002 q0054_0003 q0054_0004 q0054_0005 q0054_0006 ///
 	 q0054_0007 q0054_0008 q0054_0009 q0054_0010 q0054_0011
@@ -377,18 +437,22 @@ tab1 q0057_0001 q0057_0002 q0057_0003 q0057_0004 q0057_0005 q0057_0006 q0057_000
 *Lockdown problems
 tab1 q0058_0001 q0058_0002 q0058_0003 q0058_0004 q0058_0005 q0058_0006 q0058_0007 ///
 	 q0058_0008 q0058_0009 q0058_0010 
-*Experiences due to COVID-19
-tab1 q0060_0001 q0060_0002 q0060_0003 q0060_0004 q0060_0005 q0060_0006 q0060_0007 ///
-	 q0060_0008 q0060_0009 q0060_0010 	
+tab lockexp, miss	
 *Information Source on COVID-19
 tab1 q0079_0001 q0079_0002 q0079_0003 q0079_0004 q0079_0005 q0079_0006 q0079_0007 ///
 	 q0079_0008 q0079_0009 q0079_0010 q0079_0011 q0079_0012 q0079_0013 q0079_0014
+tab infosource, miss
 *Types of information on COVID-19 would like to receive	 
 tab1 q0080_0001 q0080_0002 q0080_0003 q0080_0004 q0080_0005 q0080_0006 q0080_0007 ///
 	 q0080_0008 q0080_0009 q0080_0010 q0080_0011 q0080_0012 q0080_0013 q0080_0014 ///
 	 q0080_0015
+tab infopref, miss 
+
+**MISCONCEPTIONS
 *COVID-19 Bioweapon
-tab covid_bio
+tab covid_bio, miss 
+tab q0054_0010, miss
+tab q0054_0011, miss
 
 *------------------------------------------------------------------------------- 
 *Cross-tabulations with sex
@@ -420,7 +484,7 @@ foreach a in agegrp education ethnic religion employment parent_child q0020_0001
 			 tab `a' sex, col
 			 
 			 }
-*-------------------------------------------------------------------------------	 
+/*-------------------------------------------------------------------------------	 
 *Cross-tabulations with age group (10 year bands)
 
 *Age
@@ -451,7 +515,7 @@ foreach a in sex education ethnic religion employment parent_child q0020_0001 //
 			 
 			 }
 *-------------------------------------------------------------------------------	 
-log close
+*log close
 	 
 	 
 	 
