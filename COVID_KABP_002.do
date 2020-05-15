@@ -36,24 +36,27 @@ MAC OS
 
 *WINDOWS OS
 **Datasets to encrypted folder
-local datapath "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
+*local datapath "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
 **Graph outputs to encrypted folder
-local outputpath "X:/The University of the West Indies/DataGroup - repo_data/data_p153/version01/3-output"
-cd "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
+*local outputpath "X:/The University of the West Indies/DataGroup - repo_data/data_p153/version01/3-output"
+*cd "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
 
 *MAC OS
 **Datasets to encrypted folder
-*local datapath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
+local datapath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
 **Logfiles to unencrypted folder
-*local logpath "/Volumes/Secomba/kernrocke/Boxcryptor/OneDrive - The University of the West Indies/Github Repositories/repo_p153"
+local logpath "/Volumes/Secomba/kernrocke/Boxcryptor/OneDrive - The University of the West Indies/Github Repositories/repo_p153"
 **Graph outputs to encrypted folder
-*local outputpath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153/version01/3-output"
-*cd "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
+local outputpath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153/version01/3-output"
+cd "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
 
 ** Close any open log files and open new log file
 capture log close
 *log using "`logpath'/COVID_BIM_KABP_Descriptives", replace
 
+
+*Install mrtab for dealing with multiple response questions
+ssc install mrtab, replace
 
 *Load in data from encrypted location
 use "`datapath'/version01/1-input/BarbadosCovid19_KABP.dta", clear
@@ -334,6 +337,58 @@ label define `x'       1 "Likely"  ///
 label value `x' `x'
 }
 
+gen protect = .
+replace protect = 1 if q0055_0001 == 1 // Worn face mask
+replace protect = 2 if q0055_0002 == 1 // Washed hands more frequently with soap and water
+replace protect = 3 if q0055_0003 == 1 // Used hand sanitizer more regularly
+replace protect = 4 if q0055_0004 == 1 // Disinfected my home
+replace protect = 5 if q0055_0005 == 1 // Covered my nose and mouth with a tissue or sleeve when sneezing and coughing
+replace protect = 6 if q0055_0006 == 1 // Avoided being around with people who have a fever or cold like symptoms
+replace protect = 7 if q0055_0007 == 1 // Avoided being  around people who have traveled
+replace protect = 8 if q0055_0008 == 1 // Avoided going out in general
+replace protect = 9 if q0055_0009 == 1 // Avoided crowded areas
+replace protect = 10 if q0055_0010 == 1 // Avoided going to public markets that sell fresh meat, fish or poultry
+replace protect = 11 if q0055_0011 == 1 // Avoided going to hospital and other healthcare settings
+replace protect = 12 if q0055_0012 == 1 // Avoided taking public transport / bus
+replace protect = 13 if q0055_0013 == 1 // Avoided going to work
+replace protect = 14 if q0055_0014 == 1 // Avoided going to school / university
+replace protect = 15 if q0055_0015 == 1 // Avoided letting my children go to school / university
+replace protect = 16 if q0055_0016 == 1 // Avoided going into shops and supermarkets
+replace protect = 17 if q0055_0017 == 1 // Avoided social events
+replace protect = 18 if q0055_0018 == 1 // Avoided travel
+replace protect = 19 if q0055_0019 == 1 // Avoided travel to other areas (outside Barbados) 
+replace protect = 20 if q0055_0020 == 1 // Avoided travel to other areas (inside Barbados)
+replace protect = 21 if q0055_0021 == 1 // Moved temporarily to the countryside or a remote location
+replace protect = 22 if q0055_0022 == 1 // Gargle with salt water
+replace protect = 23 if q0055_0023 == 1 // Bathe in the sea
+replace protect = 24 if q0055_0024 == 1 // Drink herbal /ginger/bush tea
+label var protect "Protective measures due to COVID-19"
+label define protect 1 "Worn face mask" ///
+					2 "Washed hands more frequently with soap and water" ///
+					3 "Used hand sanitizer more regularly" ///
+					4 "Disinfected my home" ///
+					5 "Covered my nose and mouth with a tissue or sleeve when sneezing and coughing" ///
+					6 "Avoided being around with people who have a fever or cold like symptoms" ///
+					7 "Avoided being  around people who have traveled" ///
+					8 "Avoided going out in general" ///
+					9 "Avoided crowded areas" ///
+					10 "Avoided going to public markets that sell fresh meat, fish or poultry" ///
+					11 "Avoided going to hospital and other healthcare settings" ///
+					12 "Avoided taking public transport / bus" ///
+					13 "Avoided going to work" ///
+					14 "Avoided going to school / university" ///
+					15 "Avoided letting my children go to school / university" ///
+					16 "Avoided going into shops and supermarkets" ///
+					17 "Avoided social events" ///
+					18 "Avoided travel" ///
+					19 "Avoided travel to other areas (outside Barbados)" ///
+					20 "Avoided travel to other areas (inside Barbados)" ///
+					21 "Moved temporarily to the countryside or a remote location" ///
+					22 "Gargle with salt water" ///
+					23 "Bathe in the sea" ///
+					24 "Drink herbal /ginger/bush tea"
+label value protect protect
+
 *lockdown experience
 gen lockexp=.
 replace lockexp=1 if q0058_0001 !=. // It has affected my mental health
@@ -399,6 +454,7 @@ rename q0081 covid_bio
 cls			  
 *Overall Descriptives
 tabstat age, stat(mean median min max) col(stat) format (%9.0f)
+
 tab agegrp, miss
 tab sex, miss 
 tab education, miss
@@ -421,31 +477,30 @@ tab worried_covid, miss
 tab test_interest, miss 
 tab likely_infected, miss 
 tab expect_infected, miss 
-*Method of virus transmission
-tab1 q0054_0001 q0054_0002 q0054_0003 q0054_0004 q0054_0005 q0054_0006 ///
-	 q0054_0007 q0054_0008 q0054_0009 q0054_0010 q0054_0011
+
+
+*Method of COVID-19 Transmission
+mrtab q0054_0001 - q0054_0011, nonames title(Method of COVID-19 Transmission) 
+
 *Protect against COVID-19
-tab1 q0055_0001	q0055_0002 q0055_0003 q0055_0004 q0055_0005 q0055_0006 q0055_0007  ///
-	 q0055_0008	q0055_0009 q0055_0010 q0055_0011 q0055_0012 q0055_0013 q0055_0014  ///
-	 q0055_0015	q0055_0016 q0055_0017 q0055_0018 q0055_0019 q0055_0020 q0055_0021  ///
-	 q0055_0022	q0055_0023 q0055_0024 
+mrtab q0055_0001 - q0055_0024, nonames title(Protective Measures) 
+
 *Self-Isolate ability and willingness
-tab1 q0056_0001 q0056_0002
+mrtab q0056_0001 q0056_0002, nonames title(Self-Isolate ability and willingness) 
+
 *Lockdown preparation
-tab1 q0057_0001 q0057_0002 q0057_0003 q0057_0004 q0057_0005 q0057_0006 q0057_0007 ///
-	 q0057_0008
+mrtab q0057_0001 - q0057_0008, nonames title(Lockdown Preventative Measures) 
+
 *Lockdown problems
-tab1 q0058_0001 q0058_0002 q0058_0003 q0058_0004 q0058_0005 q0058_0006 q0058_0007 ///
-	 q0058_0008 q0058_0009 q0058_0010 
+mrtab q0058_0001 - q0058_0010, nonames title(Lockdown Problems) 
 tab lockexp, miss	
+
 *Information Source on COVID-19
-tab1 q0079_0001 q0079_0002 q0079_0003 q0079_0004 q0079_0005 q0079_0006 q0079_0007 ///
-	 q0079_0008 q0079_0009 q0079_0010 q0079_0011 q0079_0012 q0079_0013 q0079_0014
+mrtab q0079_0001 - q0079_0014, nonames title(Information Source on COVID-19)  
 tab infosource, miss
+
 *Types of information on COVID-19 would like to receive	 
-tab1 q0080_0001 q0080_0002 q0080_0003 q0080_0004 q0080_0005 q0080_0006 q0080_0007 ///
-	 q0080_0008 q0080_0009 q0080_0010 q0080_0011 q0080_0012 q0080_0013 q0080_0014 ///
-	 q0080_0015
+mrtab q0080_0001 - q0080_0015, nonames title(Information Preference on COVID-19) 
 tab infopref, miss 
 
 **MISCONCEPTIONS
@@ -465,25 +520,40 @@ foreach a in agegrp education ethnic religion employment parent_child q0020_0001
 			 q0020_0008 job_loss save_bills work_home study_home health_worker ///
 			 essential_worker health_condition diabetes hypertension heart_disease ///
 			 resp_disease cancer men_disease other_disease worried_covid test_interest ///
-			 likely_infected expect_infected q0054_0001 q0054_0002 q0054_0003 q0054_0004 ///
-			 q0054_0005 q0054_0006 q0054_0007 q0054_0008 q0054_0009 q0054_0010 q0054_0011 ///
-			 q0055_0001 q0055_0002 q0055_0003 q0055_0004 q0055_0005 q0055_0006 q0055_0007 ///
-			 q0055_0008 q0055_0009 q0055_0010 q0055_0011 q0055_0012 q0055_0013 q0055_0014 ///
-			 q0055_0015 q0055_0016 q0055_0017 q0055_0018 q0055_0019 q0055_0020 q0055_0021 ///
-			 q0055_0022 q0055_0023 q0055_0024 q0056_0001 q0056_0002 q0057_0001 q0057_0002 ///
-			 q0057_0003 q0057_0004 q0057_0005 q0057_0006 q0057_0007 q0057_0008 q0058_0001 ///
-			 q0058_0002 q0058_0003 q0058_0004 q0058_0005 q0058_0006 q0058_0007 q0058_0008 ///
-			 q0058_0009 q0058_0010 q0060_0001 q0060_0002 q0060_0003 q0060_0004 q0060_0005 ///
-			 q0060_0006 q0060_0007 q0060_0008 q0060_0009 q0060_0010 q0079_0001 q0079_0002 ///
-			 q0079_0003 q0079_0004 q0079_0005 q0079_0006 q0079_0007 q0079_0008 q0079_0009 ///
-			 q0079_0010 q0079_0011 q0079_0012 q0079_0013 q0079_0014 q0080_0001 q0080_0002 ///
-			 q0080_0003 q0080_0004 q0080_0005 q0080_0006 q0080_0007 q0080_0008 q0080_0009 ///
-			 q0080_0010 q0080_0011 q0080_0012 q0080_0013 q0080_0014 q0080_0015 ///
-			 covid_bio {
+			 likely_infected expect_infected covid_bio {
 			 
 			 tab `a' sex, col
-			 
 			 }
+*Descriptives for Multiple Response Questions
+
+*Parent or Guardian
+mrtab q0020_0001 - q0020_0008, nonames by(sex)
+
+*Method of COVID-19 Transmission
+mrtab q0054_0001 - q0054_0011, nonames by(sex) title(Method of COVID-19 Transmission) col
+
+*Protect against COVID-19
+mrtab q0055_0001 - q0055_0024, nonames by(sex) title(Protective Measures) col
+
+*Lockdown preparation
+mrtab q0057_0001 - q0057_0008, nonames by(sex) title(Lockdown Preventative Measures) col
+
+*Lockdown problems
+mrtab q0058_0001 - q0058_0010, nonames by(sex) title(Lockdown Problems) col
+
+*Information Source on COVID-19
+mrtab q0079_0001 - q0079_0014, nonames by(sex) title(Information Source on COVID-19) col 
+
+*Types of information on COVID-19 would like to receive	 
+mrtab q0080_0001 - q0080_0015, nonames by(sex) title(Information Preference on COVID-19) col 
+
+**MISCONCEPTIONS
+*COVID-19 Bioweapon
+tab covid_bio sex, miss col
+tab q0054_0010 sex, miss col
+tab q0054_0011 sex, miss col
+
+
 /*-------------------------------------------------------------------------------	 
 *Cross-tabulations with age group (10 year bands)
 
