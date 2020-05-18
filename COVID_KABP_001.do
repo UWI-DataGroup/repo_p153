@@ -7,7 +7,7 @@ cls
 **  Project:      	COVID-19 KABP Barbados
 **  Analyst:		Kern Rocke
 **	Date Created:	11/05/2020
-**	Date Modified: 	12/05/2020
+**	Date Modified: 	15/05/2020
 **  Algorithm Task: Population Pyramid
 
 
@@ -35,17 +35,40 @@ MAC OS
 ** Dataset to encrypted location
 
 *WINDOWS OS
-local datapath "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
-local outputpath "X:/The University of the West Indies/DataGroup - repo_data/data_p153/version01/3-output"
-cd "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
+*local datapath "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
+*local outputpath "X:/The University of the West Indies/DataGroup - repo_data/data_p153/version01/3-output"
+*cd "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
 
 *MAC OS
-*local datapath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
-*local outputpath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153/version01/3-output"
-*cd "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
+local datapath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
+local outputpath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153/version01/3-output"
+cd "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
 
 *Load in data from encrypted location
 use "`datapath'/version01/1-input/BarbadosCovid19_KABP.dta", clear
+
+/*
+Consider keeping only those who stated living in Barbados
+
+        Where do you |
+   normally live for |
+  more than 3 months |
+        in the year? |      Freq.     Percent        Cum.
+---------------------+-----------------------------------
+Other (please state) |         29        0.65        0.65
+            Barbados |      4,333       97.63       98.29
+       Other CARICOM |         18        0.41       98.69
+               China |          3        0.07       98.76
+               India |          3        0.07       98.83
+              Canada |         12        0.27       99.10
+                  UK |         20        0.45       99.55
+                 USA |         20        0.45      100.00
+---------------------+-----------------------------------
+               Total |      4,438      100.00
+
+*/
+keep if q0002 == 1
+
 
 *General cleaning
 rename q0001 age
