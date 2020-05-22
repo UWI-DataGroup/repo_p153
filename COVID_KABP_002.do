@@ -53,7 +53,7 @@ cd "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
 ** Close any open log files and open new log file
 capture log close
 
-*Install mrtab for dealing with multiple response questions
+*Install mrtab for dealing with multiple response questions- This user driven command can be used to tabulate variables used for multiple responses
 ssc install mrtab, replace
 
 *Load in data from encrypted location
@@ -64,7 +64,8 @@ This algorithm provides basic descriptives for key variables for reporting of
 results of the COVID-19 KABP Barbados study. 
 */
 
-
+*Save data to encrypted location
+save "`datapath'/version01/2-working/BarbadosCovid19_KABP_v2", replace
 *-------------------------------------------------------------------------------
 
 /*
@@ -493,8 +494,12 @@ label values infopref infopref
 
 
 
-*PCOVID-19 Bioweapon
+*Renaming q0081 to COVID-19 Bioweapon
 rename q0081 covid_bio
+
+*Save data to encrypted location
+save "`datapath'/version01/2-working/BarbadosCovid19_KABP_v2", replace
+
 
 *-------------------------------------------------------------------------------
 *clear screen for focus on result only
@@ -1005,7 +1010,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("Demographics") modify 
 putexcel B6=("Sex") C6=("Freq.") D6=("Percent")
 putexcel B7=matrix(names) C7=matrix(freq) D7=matrix(freq/r(N)*100)
-putexcel B7=("Female") B8=("Male") B9=(".") B11 = ("Total") D11=(100)
+putexcel B7=("Female") B8=("Male") B9=("Missing") B11 = ("Total") D11=(100)
 putexcel C11= matrix(T)
 
 *Age Groups
@@ -1016,7 +1021,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("Demographics") modify 
 putexcel B14=("Age Groups") C14=("Freq.") D14=("Percent")
 putexcel B15=matrix(names) C15=matrix(freq) D15=matrix(freq/r(N)*100)
-putexcel B15=("18-29") B16=("30-39") B17=("40-49") B18=("50-59") B19=("60-69") B20=("70 & over") B21=(".") B23 = ("Total") D23=(100)
+putexcel B15=("18-29") B16=("30-39") B17=("40-49") B18=("50-59") B19=("60-69") B20=("70 & over") B21=("Missing") B23 = ("Total") D23=(100)
 putexcel C23= matrix(T)
 
 
@@ -1028,7 +1033,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("Demographics") modify 
 putexcel B26=("Education") C26=("Freq.") D26=("Percent")
 putexcel B27=matrix(names) C27=matrix(freq) D27=matrix(freq/r(N)*100)
-putexcel B27=("Primary") B28=("Secondary") B29=("Polytechnic/BCC") B30=("University") B31=(".") B33 = ("Total") D33=(100)
+putexcel B27=("Primary") B28=("Secondary") B29=("Polytechnic/BCC") B30=("University") B31=("Missing") B33 = ("Total") D33=(100)
 putexcel C33= matrix(T)
 
 *Religion
@@ -1040,7 +1045,7 @@ putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("Demographics"
 putexcel B36=("Religion") C36=("Freq.") D36=("Percent")
 putexcel B37=matrix(names) C37=matrix(freq) D37=matrix(freq/r(N)*100)
 putexcel B37=("Anglican") B38=("Roman Catholic") B39=("Baptist") B40=("Seventh Day Adventist") ///
-			B41=("Muslim") B42 = ("Rastafarian") B43 =("Hindu") B44 =("Other") B45=(".") B47=("Total") D47=(100)
+			B41=("Muslim") B42 = ("Rastafarian") B43 =("Hindu") B44 =("Other") B45=("Missing") B47=("Total") D47=(100)
 putexcel C47= matrix(T)
 
 *Parent and Guardians
@@ -1064,7 +1069,7 @@ putexcel B55=("11 years to 15 years old")
 putexcel B56=("16 years to 18 years old")
 putexcel B57=("Older than 18")
 putexcel B58=("I do not have children")
-putexcel B59=(".")
+putexcel B59=("Missing")
 putexcel B61=("Total")
 
 
@@ -1080,7 +1085,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("EconomicAspects") modify 
 putexcel B6=("Employment Categories") C6=("Freq.") D6=("Percent")
 putexcel B7=matrix(names) C7=matrix(freq) D7=matrix(freq/r(N)*100)
-putexcel B7=("Working full-time") B8=("Working part-time") B9=("Full-time student") B10=("Retired") B11=("Self-employed") B12=("Unemployed NOT seeking work") B13=("Unemployed and seeking work") B14=("Other") B15=(".")
+putexcel B7=("Working full-time") B8=("Working part-time") B9=("Full-time student") B10=("Retired") B11=("Self-employed") B12=("Unemployed NOT seeking work") B13=("Unemployed and seeking work") B14=("Other") B15=("Missing")
 putexcel C17= matrix(T) B17= ("Total") D17=(100)
 
 *Job/Business loss due to COVID-19
@@ -1091,7 +1096,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("EconomicAspects") modify 
 putexcel B20=("Job/Business Loss due to COVID-19") C20=("Freq.") D20=("Percent")
 putexcel B21=matrix(names) C21=matrix(freq) D21=matrix(freq/r(N)*100)
-putexcel B21=("Yes") B22=("No") B23=(".")
+putexcel B21=("Yes") B22=("No") B23=("Missing")
 putexcel C25= matrix(T) B25 = ("Total") D25=(100)
 
 *Using savings to pay bills
@@ -1102,7 +1107,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("EconomicAspects") modify 
 putexcel B28=("Savings to pay bills") C28=("Freq.") D28=("Percent")
 putexcel B29=matrix(names) C29=matrix(freq) D29=matrix(freq/r(N)*100)
-putexcel B29=("Less than 1 month") B30=("1 to 2 months") B31=("2 to 3 months") B32=("4 to 5 months") B33=("6 months") B34=("More than 6 months") B35=("Not applicable") B36=("Other") B37=(".")
+putexcel B29=("Less than 1 month") B30=("1 to 2 months") B31=("2 to 3 months") B32=("4 to 5 months") B33=("6 months") B34=("More than 6 months") B35=("Not applicable") B36=("Other") B37=("Missing")
 putexcel C39= matrix(T) B39 = ("Total") D39=(100)
 
 *Ability to work from home
@@ -1113,7 +1118,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("EconomicAspects") modify 
 putexcel B42=("Working from home") C42=("Freq.") D42=("Percent")
 putexcel B43=matrix(names) C43=matrix(freq) D43=matrix(freq/r(N)*100)
-putexcel B43=("Yes") B44=("No") B45=("Don't know") B46=("Not applicable") B47=("Other") B48=(".")
+putexcel B43=("Yes") B44=("No") B45=("Don't know") B46=("Not applicable") B47=("Other") B48=("Missing")
 putexcel C50= matrix(T) B50=("Total") D50=(100)
 
 *Ability to study from home
@@ -1124,7 +1129,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("EconomicAspects") modify 
 putexcel B53=("Studying from home") C53=("Freq.") D53=("Percent")
 putexcel B54=matrix(names) C54=matrix(freq) D54=matrix(freq/r(N)*100)
-putexcel B54=("Yes") B55=("No") B56=("Don't know") B57=("Not applicable") B58=("Other") B59=(".")
+putexcel B54=("Yes") B55=("No") B56=("Don't know") B57=("Not applicable") B58=("Other") B59=("Missing")
 putexcel C61= matrix(T) B61=("Total") D61=(100)
 
 *Healthcare Worker
@@ -1135,7 +1140,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("EconomicAspects") modify 
 putexcel B64=("Healthcare Worker") C64=("Freq.") D64=("Percent")
 putexcel B65=matrix(names) C65=matrix(freq) D65=matrix(freq/r(N)*100)
-putexcel B65=("Yes") B66=("No") B67=(".")
+putexcel B65=("Yes") B66=("No") B67=("Missing")
 putexcel C69= matrix(T) B69 = ("Total") D69=(100)
 
 *Essential Worker
@@ -1146,7 +1151,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("EconomicAspects") modify 
 putexcel B72=("Essential Worker") C72=("Freq.") D72=("Percent")
 putexcel B73=matrix(names) C73=matrix(freq) D73=matrix(freq/r(N)*100)
-putexcel B73=("Yes") B74=("No") B75=(".")
+putexcel B73=("Yes") B74=("No") B75=("Missing")
 putexcel C77= matrix(T) B77 = ("Total") D77=(100)
 
 *-------------------------------------------------------------------------------
@@ -1174,7 +1179,7 @@ putexcel B11=("Cancer")
 putexcel B12=("Mental Disease")
 putexcel B13=("Other")
 putexcel B14=("No chronic conditions")
-putexcel B15=(".")
+putexcel B15=("Missing")
 putexcel B17=("Total")
 
 *-------------------------------------------------------------------------------
@@ -1189,7 +1194,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("AttitudesToCovid") modify 
 putexcel B6=("Worried about COVID-19") C6=("Freq.") D6=("Percent")
 putexcel B7=matrix(names) C7=matrix(freq) D7=matrix(freq/r(N)*100)
-putexcel B7=("Very worried") B8=("Fairly worried") B9=("Not very worried") B10=("Don't know") B11=(".") 
+putexcel B7=("Very worried") B8=("Fairly worried") B9=("Not very worried") B10=("Don't know") B11=("Missing") 
 putexcel C13= matrix(T) B13= ("Total") D13=(100)
 
 *Interested in getting tested
@@ -1200,7 +1205,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("AttitudesToCovid") modify 
 putexcel B16=("If you haven't been tested would you likely to be tested") C16=("Freq.") D16=("Percent")
 putexcel B17=matrix(names) C17=matrix(freq) D17=matrix(freq/r(N)*100)
-putexcel B17=("Yes") B18=("No") B19=(".") 
+putexcel B17=("Yes") B18=("No") B19=("Missing") 
 putexcel C21= matrix(T) B21= ("Total") D21=(100)
 
 *Likely infected under Barbados current preventive measures
@@ -1211,7 +1216,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("AttitudesToCovid") modify 
 putexcel B24=("Likely infected under Barbados current preventive measures") C24=("Freq.") D24=("Percent")
 putexcel B25=matrix(names) C25=matrix(freq) D25=matrix(freq/r(N)*100)
-putexcel B25=("Very likely") B26=("Fairly likely") B27=("Neither likely or unlikely") B28=("Fairly unlikely") B29=("Very unlikely") B30=("Don't know") B31=(".")
+putexcel B25=("Very likely") B26=("Fairly likely") B27=("Neither likely or unlikely") B28=("Fairly unlikely") B29=("Very unlikely") B30=("Don't know") B31=("Missing")
 putexcel C33= matrix(T) B33= ("Total") D33=(100)
 
 *Expectation of effect of COVID-19 if infected
@@ -1222,7 +1227,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("AttitudesToCovid") modify 
 putexcel B36=("Expectation if infected with COVID-19") C36=("Freq.") D36=("Percent")
 putexcel B37=matrix(names) C37=matrix(freq) D37=matrix(freq/r(N)*100)
-putexcel B37=("Life-threatening") B38=("Severe") B39=("Moderate") B40=("Mild") B41=("No symptoms") B42=("Don't know") B43=(".")
+putexcel B37=("Life-threatening") B38=("Severe") B39=("Moderate") B40=("Mild") B41=("No symptoms") B42=("Don't know") B43=("Missing")
 putexcel C45= matrix(T) B45= ("Total") D45=(100)
 
 *Protective Measures against COVID-19 transmission
@@ -1298,7 +1303,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("AttitudesToCovid") modify 
 putexcel B76=("Ability to Self Isolate") C76=("Freq.") D76=("Percent")
 putexcel B77=matrix(names) C77=matrix(freq) D77=matrix(freq/r(N)*100)
-putexcel B77=("Yes I would") B78=("No I wouldn't") B79=("Don't know") B80=(".") 
+putexcel B77=("Yes I would") B78=("No I wouldn't") B79=("Don't know") B80=("Missing") 
 putexcel C82= matrix(T) B82= ("Total") D82=(100)
 
 *Willingness to self isolate
@@ -1309,7 +1314,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("AttitudesToCovid") modify 
 putexcel B85=("Willingness to Self Isolate") C85=("Freq.") D85=("Percent")
 putexcel B86=matrix(names) C86=matrix(freq) D86=matrix(freq/r(N)*100)
-putexcel B86=("Yes I would") B87=("No I wouldn't") B88=("Don't know") B89=(".") 
+putexcel B86=("Yes I would") B87=("No I wouldn't") B88=("Don't know") B89=("Missing") 
 putexcel C91= matrix(T) B91= ("Total") D91=(100)
 
 *-------------------------------------------------------------------------------
@@ -1387,7 +1392,7 @@ putexcel B25=("Impact on education")
 putexcel B26=("Don't know")
 putexcel B27=("No problems")
 putexcel B28=("Other")
-putexcel B29=(".")
+putexcel B29=("Missing")
 putexcel B31=("Total")
 
 *-------------------------------------------------------------------------------
@@ -1483,7 +1488,7 @@ putexcel B31=("My family or friends" )
 putexcel B32=("Work / school / college communications" )
 putexcel B33=("I am not getting any information" )
 putexcel B34=("Other" )
-putexcel B35=(".")
+putexcel B35=("Missing")
 putexcel B37=("Total")
 
 *Information Preference
@@ -1514,7 +1519,7 @@ putexcel B52=("NPIs (Other Countries)" )
 putexcel B53=("NPIs (International organizations)" )
 putexcel B54=("I do want to receive any information" )
 putexcel B55=("Other")
-putexcel B56=(".")
+putexcel B56=("Missing")
 putexcel B58=("Total")
 
 *Misconceptions
@@ -1529,7 +1534,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("Knowledge") modify 
 putexcel B65=("COVID-19 Bioterrorism") C65=("Freq.") D65=("Percent")
 putexcel B66=matrix(names) C66=matrix(freq) D66=matrix(freq/r(N)*100)
-putexcel B66=("Likely") B67=("Unlikely") B68=(".") 
+putexcel B66=("Likely") B67=("Unlikely") B68=("Missing") 
 putexcel C70= matrix(T) B70= ("Total") D70=(100)
 
 putexcel B73=("How likely or unlikely, do you think it is that the corona-virus (i.e COVID-19) is transmitted through each of the following")
@@ -1542,7 +1547,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("Knowledge") modify 
 putexcel B75=("Eating foods imported from China") C75=("Freq.") D75=("Percent")
 putexcel B76=matrix(names) C76=matrix(freq) D76=matrix(freq/r(N)*100)
-putexcel B76=("Likely") B77=("Unlikely") B78=("Neither likely or unlikely") B79=("Don't know") B80=(".") 
+putexcel B76=("Likely") B77=("Unlikely") B78=("Neither likely or unlikely") B79=("Don't know") B80=("Missing") 
 putexcel C82= matrix(T) B82= ("Total") D82=(100)
 
 *Using products imported from China
@@ -1553,7 +1558,7 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_Overall.xlsx", sheet("Knowledge") modify 
 putexcel B85=("Using products imported from China") C85=("Freq.") D85=("Percent")
 putexcel B86=matrix(names) C86=matrix(freq) D86=matrix(freq/r(N)*100)
-putexcel B86=("Likely") B87=("Unlikely") B88=("Neither likely or unlikely") B89=("Don't know") B90=(".") 
+putexcel B86=("Likely") B87=("Unlikely") B88=("Neither likely or unlikely") B89=("Don't know") B90=("Missing") 
 putexcel C92= matrix(T) B92= ("Total") D92=(100)
 
 *-------------------------------------------------------------------------------
@@ -1573,10 +1578,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Demographics") modify
 putexcel C13=("Frequency") G13=("Percent")
 putexcel B14=("Age Groups") 
-putexcel C14=("Female") D14=("Male") E14=(".")  // Frequency
-putexcel G14=("Female") H14=("Male") I14=(".")	// Percentage
+putexcel C14=("Female") D14=("Male") E14=("Missing")  // Frequency
+putexcel G14=("Female") H14=("Male") I14=("Missing")	// Percentage
 putexcel B15=matrix(names) C15=matrix(freq) G15=matrix(freq/r(N)*100)
-putexcel B15=("18-29") B16=("30-39") B17=("40-49") B18=("50-59") B19=("60-69") B20=("70 & over") B21=(".") B23 = ("Total") 
+putexcel B15=("18-29") B16=("30-39") B17=("40-49") B18=("50-59") B19=("60-69") B20=("70 & over") B21=("Missing") B23 = ("Total") 
 putexcel C23= matrix(T)
 
 *Education
@@ -1587,10 +1592,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Demographics") modify
 putexcel C26=("Frequency") G26=("Percent") 
 putexcel B27=("Education") 
-putexcel C27=("Female") D27=("Male") E27=(".") // Frequency
-putexcel G27=("Female") H27=("Male") I27=(".") // Percentage
+putexcel C27=("Female") D27=("Male") E27=("Missing") // Frequency
+putexcel G27=("Female") H27=("Male") I27=("Missing") // Percentage
 putexcel B28=matrix(names) C28=matrix(freq) G28=matrix(freq/r(N)*100)
-putexcel B28=("Primary") B29=("Secondary") B30=("Polytechnic/BCC") B31=("University") B32=(".") B34 = ("Total") 
+putexcel B28=("Primary") B29=("Secondary") B30=("Polytechnic/BCC") B31=("University") B32=("Missing") B34 = ("Total") 
 putexcel C34= matrix(T)
 
 *Religion
@@ -1601,11 +1606,11 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Demographics") modify 
 putexcel C36=("Frequency") G36=("Percent") 
 putexcel B37=("Religion") 
-putexcel C37=("Female") D37=("Male") E37=(".") // Frequency
-putexcel G37=("Female") H37=("Male") I37=(".") // Percentage
+putexcel C37=("Female") D37=("Male") E37=("Missing") // Frequency
+putexcel G37=("Female") H37=("Male") I37=("Missing") // Percentage
 putexcel B38=matrix(names) C38=matrix(freq) G38=matrix(freq/r(N)*100)
 putexcel B38=("Anglican") B39=("Roman Catholic") B40=("Baptist") B41=("Seventh Day Adventist") ///
-			B42=("Muslim") B43 = ("Rastafarian") B44 =("Hindu") B45 =("Other") B46=(".") B48=("Total") 
+			B42=("Muslim") B43 = ("Rastafarian") B44 =("Hindu") B45 =("Other") B46=("Missing") B48=("Total") 
 putexcel C48= matrix(T)
 
 *Parent and Guardians
@@ -1644,10 +1649,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C5=("Frequency") G5=("Percent") 
 putexcel B6=("Employment Categories")
-putexcel C6=("Female") D6=("Male") E6=(".") // Frequency
-putexcel G6=("Female") H6=("Male") I6=(".") // Percentage
+putexcel C6=("Female") D6=("Male") E6=("Missing") // Frequency
+putexcel G6=("Female") H6=("Male") I6=("Missing") // Percentage
 putexcel B7=matrix(names) C7=matrix(freq) G7=matrix(freq/r(N)*100)
-putexcel B7=("Working full-time") B8=("Working part-time") B9=("Full-time student") B10=("Retired") B11=("Self-employed") B12=("Unemployed NOT seeking work") B13=("Unemployed and seeking work") B14=("Other") B15=(".")
+putexcel B7=("Working full-time") B8=("Working part-time") B9=("Full-time student") B10=("Retired") B11=("Self-employed") B12=("Unemployed NOT seeking work") B13=("Unemployed and seeking work") B14=("Other") B15=("Missing")
 putexcel C17= matrix(T) B17= ("Total") 
 
 *Job/Business loss due to COVID-19
@@ -1658,10 +1663,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C20=("Frequency") G20=("Percent") 
 putexcel B21=("Job/Business Loss due to COVID-19") 
-putexcel C21=("Female") D21=("Male") E21=(".") // Frequency
-putexcel G21=("Female") H21=("Male") I21=(".") // Percentage
+putexcel C21=("Female") D21=("Male") E21=("Missing") // Frequency
+putexcel G21=("Female") H21=("Male") I21=("Missing") // Percentage
 putexcel B22=matrix(names) C22=matrix(freq) G22=matrix(freq/r(N)*100)
-putexcel B22=("Yes") B23=("No") B24=(".")
+putexcel B22=("Yes") B23=("No") B24=("Missing")
 putexcel C26= matrix(T) B26 = ("Total") 
 
 *Using savings to pay bills
@@ -1672,10 +1677,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C28=("Frequency") G28=("Percent") 
 putexcel B29=("Savings to pay bills") 
-putexcel C29=("Female") D29=("Male") E29=(".") // Frequency
-putexcel G29=("Female") H29=("Male") I29=(".") // Percentage
+putexcel C29=("Female") D29=("Male") E29=("Missing") // Frequency
+putexcel G29=("Female") H29=("Male") I29=("Missing") // Percentage
 putexcel B30=matrix(names) C30=matrix(freq) G30=matrix(freq/r(N)*100)
-putexcel B30=("Less than 1 month") B31=("1 to 2 months") B32=("2 to 3 months") B33=("4 to 5 months") B34=("6 months") B35=("More than 6 months") B36=("Not applicable") B37=("Other") B38=(".")
+putexcel B30=("Less than 1 month") B31=("1 to 2 months") B32=("2 to 3 months") B33=("4 to 5 months") B34=("6 months") B35=("More than 6 months") B36=("Not applicable") B37=("Other") B38=("Missing")
 putexcel C40= matrix(T) B40 = ("Total") 
 
 *Ability to work from home
@@ -1686,10 +1691,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C43=("Frequency") G43=("Percent") 
 putexcel B44=("Working from home") 
-putexcel C44=("Female") D44=("Male") E44=(".") // Frequency
-putexcel G44=("Female") H44=("Male") I44=(".") // Percentage
+putexcel C44=("Female") D44=("Male") E44=("Missing") // Frequency
+putexcel G44=("Female") H44=("Male") I44=("Missing") // Percentage
 putexcel B45=matrix(names) C45=matrix(freq) G45=matrix(freq/r(N)*100)
-putexcel B45=("Yes") B46=("No") B47=("Don't know") B48=("Not applicable") B49=("Other") B50=(".")
+putexcel B45=("Yes") B46=("No") B47=("Don't know") B48=("Not applicable") B49=("Other") B50=("Missing")
 putexcel C52= matrix(T) B52=("Total") 
 
 *Ability to study from home
@@ -1700,10 +1705,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C55=("Frequency") G55=("Percent")
 putexcel B56=("Studying from home") 
-putexcel C56=("Female") D56=("Male") E56=(".") // Frequency
-putexcel G56=("Female") H56=("Male") I56=(".") // Percentage
+putexcel C56=("Female") D56=("Male") E56=("Missing") // Frequency
+putexcel G56=("Female") H56=("Male") I56=("Missing") // Percentage
 putexcel B57=matrix(names) C57=matrix(freq) G57=matrix(freq/r(N)*100)
-putexcel B57=("Yes") B58=("No") B59=("Don't know") B60=("Not applicable") B61=("Other") B62=(".")
+putexcel B57=("Yes") B58=("No") B59=("Don't know") B60=("Not applicable") B61=("Other") B62=("Missing")
 putexcel C64= matrix(T) B64=("Total") 
 
 *Healthcare Worker
@@ -1714,10 +1719,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify
 putexcel C67=("Frequency") G67=("Percent")
 putexcel B68=("Healthcare Worker") 
-putexcel C68=("Female") D68=("Male") E68=(".") // Frequency
-putexcel G68=("Female") H68=("Male") I68=(".") // Percentage
+putexcel C68=("Female") D68=("Male") E68=("Missing") // Frequency
+putexcel G68=("Female") H68=("Male") I68=("Missing") // Percentage
 putexcel B69=matrix(names) C69=matrix(freq) G69=matrix(freq/r(N)*100)
-putexcel B69=("Yes") B70=("No") B71=(".")
+putexcel B69=("Yes") B70=("No") B71=("Missing")
 putexcel C73= matrix(T) B73 = ("Total") 
 
 *Essential Worker
@@ -1728,10 +1733,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C76=("Frequency") G76=("Percent")
 putexcel B77=("Essential Worker") 
-putexcel C77=("Female") D77=("Male") E77=(".") // Frequency
-putexcel G77=("Female") H77=("Male") I77=(".") // Percentage
+putexcel C77=("Female") D77=("Male") E77=("Missing") // Frequency
+putexcel G77=("Female") H77=("Male") I77=("Missing") // Percentage
 putexcel B78=matrix(names) C78=matrix(freq) G78=matrix(freq/r(N)*100)
-putexcel B78=("Yes") B79=("No") B80=(".")
+putexcel B78=("Yes") B79=("No") B80=("Missing")
 putexcel C82= matrix(T) B82 = ("Total") 
 
 *-------------------------------------------------------------------------------
@@ -1762,7 +1767,7 @@ putexcel B11=("Cancer")
 putexcel B12=("Mental Disease")
 putexcel B13=("Other")
 putexcel B14=("No chronic conditions")
-putexcel B15=(".")
+putexcel B15=("Missing")
 putexcel B17=("Total")
 
 *-------------------------------------------------------------------------------
@@ -1780,7 +1785,7 @@ putexcel B6=("Worried about COVID-19")
 putexcel C6=("Female") D6=("Male") // Frequency
 putexcel G6=("Female") H6=("Male") // Percentage
 putexcel B7=matrix(names) C7=matrix(freq) G7=matrix(freq/r(N)*100)
-putexcel B7=("Very worried") B8=("Fairly worried") B9=("Not very worried") B10=("Don't know") B11=(".") 
+putexcel B7=("Very worried") B8=("Fairly worried") B9=("Not very worried") B10=("Don't know") B11=("Missing") 
 putexcel C13= matrix(T) B13= ("Total") 
 
 *Interested in getting tested
@@ -1794,7 +1799,7 @@ putexcel B17=("If you haven't been tested would you likely to be tested")
 putexcel C17=("Female") D17=("Male")
 putexcel G17=("Female") H17=("Male")
 putexcel B18=matrix(names) C18=matrix(freq) G18=matrix(freq/r(N)*100)
-putexcel B18=("Yes") B19=("No") B20=(".") 
+putexcel B18=("Yes") B19=("No") B20=("Missing") 
 putexcel C22= matrix(T) B22= ("Total") 
 
 *Likely infected under Barbados current preventive measures
@@ -1808,7 +1813,7 @@ putexcel B26=("Likely infected under Barbados current preventive measures")
 putexcel C26=("Female") D26=("Male")
 putexcel G26=("Female") H26=("Male")
 putexcel B27=matrix(names) C27=matrix(freq) G27=matrix(freq/r(N)*100)
-putexcel B27=("Very likely") B28=("Fairly likely") B29=("Neither likely or unlikely") B30=("Fairly unlikely") B31=("Very unlikely") B32=("Don't know") B33=(".")
+putexcel B27=("Very likely") B28=("Fairly likely") B29=("Neither likely or unlikely") B30=("Fairly unlikely") B31=("Very unlikely") B32=("Don't know") B33=("Missing")
 putexcel C34= matrix(T) B34= ("Total") 
 
 *Expectation of effect of COVID-19 if infected
@@ -1822,7 +1827,7 @@ putexcel B38=("Expectation if infected with COVID-19")
 putexcel C38=("Female") D38=("Male")
 putexcel G38=("Female") H38=("Male")
 putexcel B39=matrix(names) C39=matrix(freq) G39=matrix(freq/r(N)*100)
-putexcel B39=("Life-threatening") B40=("Severe") B41=("Moderate") B42=("Mild") B43=("No symptoms") B44=("Don't know") B45=(".")
+putexcel B39=("Life-threatening") B40=("Severe") B41=("Moderate") B42=("Mild") B43=("No symptoms") B44=("Don't know") B45=("Missing")
 putexcel C47= matrix(T) B47= ("Total") 
 
 *Protective Measures against COVID-19 transmission
@@ -1907,7 +1912,7 @@ putexcel B81=("Ability to Self Isolate")
 putexcel C81=("Female") D81=("Male")
 putexcel G81=("Female") H81=("Male")
 putexcel B82=matrix(names) C82=matrix(freq) G82=matrix(freq/r(N)*100)
-putexcel B82=("Yes I would") B83=("No I wouldn't") B84=("Don't know") B85=(".") 
+putexcel B82=("Yes I would") B83=("No I wouldn't") B84=("Don't know") B85=("Missing") 
 putexcel C87= matrix(T) B87= ("Total") 
 
 *Willingness to self isolate
@@ -1921,7 +1926,7 @@ putexcel B91=("Willingness to Self Isolate")
 putexcel C91=("Female") D91=("Male")
 putexcel G91=("Female") H91=("Male")
 putexcel B92=matrix(names) C92=matrix(freq) G92=matrix(freq/r(N)*100)
-putexcel B92=("Yes I would") B93=("No I wouldn't") B94=("Don't know") B95=(".") 
+putexcel B92=("Yes I would") B93=("No I wouldn't") B94=("Don't know") B95=("Missing") 
 putexcel C97= matrix(T) B97= ("Total") 
 
 *-------------------------------------------------------------------------------
@@ -2006,7 +2011,7 @@ putexcel B26=("Impact on education")
 putexcel B27=("Don't know")
 putexcel B28=("No problems")
 putexcel B29=("Other")
-putexcel B30=(".")
+putexcel B30=("Missing")
 putexcel B32=("Total")
 
 *-------------------------------------------------------------------------------
@@ -2103,7 +2108,7 @@ putexcel B32=("My family or friends" )
 putexcel B33=("Work / school / college communications" )
 putexcel B34=("I am not getting any information" )
 putexcel B35=("Other" )
-putexcel B36=(".")
+putexcel B36=("Missing")
 putexcel B38=("Total")
 
 
@@ -2138,7 +2143,7 @@ putexcel B53=("NPIs (Other Countries)" )
 putexcel B54=("NPIs (International organizations)" )
 putexcel B55=("I do want to receive any information" )
 putexcel B56=("Other")
-putexcel B57=(".")
+putexcel B57=("Missing")
 putexcel B59=("Total")
 
 *Misconceptions
@@ -2154,10 +2159,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Knowledge") modify 
 putexcel C66=("Frequency") G66=("Percent")
 putexcel B67=("COVID-19 Bioterrorism") 
-putexcel C67=("Female") D67=("Male") E67=(".")  // Frequency
-putexcel G67=("Female") H67=("Male") I67=(".")	// Percentage
+putexcel C67=("Female") D67=("Male") E67=("Missing")  // Frequency
+putexcel G67=("Female") H67=("Male") I67=("Missing")	// Percentage
 putexcel B68=matrix(names) C68=matrix(freq) G68=matrix(freq/r(N)*100)
-putexcel B68=("Likely") B69=("Unlikely") B70=(".") 
+putexcel B68=("Likely") B69=("Unlikely") B70=("Missing") 
 putexcel C72= matrix(T) B72= ("Total") 
 
 **
@@ -2171,10 +2176,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Knowledge") modify 
 putexcel C75=("Frequency") G75=("Percent")
 putexcel B76=("Eating foods imported from China") 
-putexcel C76=("Female") D76=("Male") E76=(".")  // Frequency
-putexcel G76=("Female") H76=("Male") I76=(".")	// Percentage
+putexcel C76=("Female") D76=("Male") E76=("Missing")  // Frequency
+putexcel G76=("Female") H76=("Male") I76=("Missing")	// Percentage
 putexcel B77=matrix(names)  G77=matrix(freq/r(N)*100)
-putexcel B77=("Likely") B78=("Unlikely") B79=("Neither likely or unlikely") B80=("Don't know") B81=(".") 
+putexcel B77=("Likely") B78=("Unlikely") B79=("Neither likely or unlikely") B80=("Don't know") B81=("Missing") 
 putexcel C83= matrix(T) B83= ("Total") 
 
 *Using products imported from China
@@ -2185,10 +2190,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Knowledge") modify 
 putexcel C85=("Frequency") G85=("Percent")
 putexcel B86=("Using products imported from China")
-putexcel C86=("Female") D86=("Male") E86=(".")  // Frequency
-putexcel G86=("Female") H86=("Male") I86=(".")	// Percentage
+putexcel C86=("Female") D86=("Male") E86=("Missing")  // Frequency
+putexcel G86=("Female") H86=("Male") I86=("Missing")	// Percentage
 putexcel B87=matrix(names) G87=matrix(freq/r(N)*100)
-putexcel B87=("Likely") B88=("Unlikely") B89=("Neither likely or unlikely") B90=("Don't know") B91=(".") 
+putexcel B87=("Likely") B88=("Unlikely") B89=("Neither likely or unlikely") B90=("Don't know") B91=("Missing") 
 putexcel C93= matrix(T) B93= ("Total") 
 
 *-------------------------------------------------------------------------------
@@ -2208,10 +2213,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("Demographics") modify
 putexcel C13=("Frequency") K13=("Percent")
 putexcel B14=("Sex") 
-putexcel C14=("18-29") D14=("30-39") E14=("40-49") F14=("50-59") G14=("60-69") H14=("70 & over") I14=(".")
-putexcel K14=("18-29") L14=("30-39") M14=("40-49") N14=("50-59") O14=("60-69") P14=("70 & over") Q14=(".")
+putexcel C14=("18-29") D14=("30-39") E14=("40-49") F14=("50-59") G14=("60-69") H14=("70 & over") I14=("Missing")
+putexcel K14=("18-29") L14=("30-39") M14=("40-49") N14=("50-59") O14=("60-69") P14=("70 & over") Q14=("Missing")
 putexcel B15=matrix(names) C15=matrix(freq) K15=matrix(freq/r(N)*100)
-putexcel B15=("Female") B16=("Male") B17=(".") 
+putexcel B15=("Female") B16=("Male") B17=("Missing") 
 putexcel B19 = ("Total")  C19= matrix(T)
 
 *Education
@@ -2222,10 +2227,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("Demographics") modify
 putexcel C26=("Frequency") K26=("Percent") 
 putexcel B27=("Education") 
-putexcel C27=("18-29") D27=("30-39") E27=("40-49") F27=("50-59") G27=("60-69") H27=("70 & over") I27=(".")
-putexcel K27=("18-29") L27=("30-39") M27=("40-49") N27=("50-59") O27=("60-69") P27=("70 & over") Q27=(".")
+putexcel C27=("18-29") D27=("30-39") E27=("40-49") F27=("50-59") G27=("60-69") H27=("70 & over") I27=("Missing")
+putexcel K27=("18-29") L27=("30-39") M27=("40-49") N27=("50-59") O27=("60-69") P27=("70 & over") Q27=("Missing")
 putexcel B28=matrix(names) C28=matrix(freq) K28=matrix(freq/r(N)*100)
-putexcel B28=("Primary") B29=("Secondary") B30=("Polytechnic/BCC") B31=("University") B32=(".")  
+putexcel B28=("Primary") B29=("Secondary") B30=("Polytechnic/BCC") B31=("University") B32=("Missing")  
 putexcel B34 = ("Total") C34= matrix(T)
 
 *Religion
@@ -2236,11 +2241,11 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("Demographics") modify 
 putexcel C36=("Frequency") K36=("Percent") 
 putexcel B37=("Religion")
-putexcel C37=("18-29") D37=("30-39") E37=("40-49") F37=("50-59") G37=("60-69") H37=("70 & over") I37=(".")
-putexcel K37=("18-29") L37=("30-39") M37=("40-49") N37=("50-59") O37=("60-69") P37=("70 & over") Q37=(".")
+putexcel C37=("18-29") D37=("30-39") E37=("40-49") F37=("50-59") G37=("60-69") H37=("70 & over") I37=("Missing")
+putexcel K37=("18-29") L37=("30-39") M37=("40-49") N37=("50-59") O37=("60-69") P37=("70 & over") Q37=("Missing")
 putexcel B38=matrix(names) C38=matrix(freq) K38=matrix(freq/r(N)*100)
 putexcel B38=("Anglican") B39=("Roman Catholic") B40=("Baptist") B41=("Seventh Day Adventist") ///
-			B42=("Muslim") B43 = ("Rastafarian") B44 =("Hindu") B45 =("Other") B46=(".") 
+			B42=("Muslim") B43 = ("Rastafarian") B44 =("Hindu") B45 =("Other") B46=("Missing") 
 putexcel B48=("Total") C48= matrix(T)
 
 *Parent and Guardians
@@ -2279,10 +2284,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("EconomicAspects") modify 
 putexcel C5=("Frequency") K5=("Percent") 
 putexcel B6=("Employment Categories")
-putexcel C6=("18-29") D6=("30-39") E6=("40-49") F6=("50-59") G6=("60-69") H6=("70 & over") I6=(".")
-putexcel K6=("18-29") L6=("30-39") M6=("40-49") N6=("50-59") O6=("60-69") P6=("70 & over") Q6=(".")
+putexcel C6=("18-29") D6=("30-39") E6=("40-49") F6=("50-59") G6=("60-69") H6=("70 & over") I6=("Missing")
+putexcel K6=("18-29") L6=("30-39") M6=("40-49") N6=("50-59") O6=("60-69") P6=("70 & over") Q6=("Missing")
 putexcel B7=matrix(names) C7=matrix(freq) K7=matrix(freq/r(N)*100)
-putexcel B7=("Working full-time") B8=("Working part-time") B9=("Full-time student") B10=("Retired") B11=("Self-employed") B12=("Unemployed NOT seeking work") B13=("Unemployed and seeking work") B14=("Other") B15=(".")
+putexcel B7=("Working full-time") B8=("Working part-time") B9=("Full-time student") B10=("Retired") B11=("Self-employed") B12=("Unemployed NOT seeking work") B13=("Unemployed and seeking work") B14=("Other") B15=("Missing")
 putexcel C17= matrix(T) B17= ("Total") 
 
 *Job/Business loss due to COVID-19
@@ -2293,10 +2298,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("EconomicAspects") modify 
 putexcel C20=("Frequency") K20=("Percent") 
 putexcel B21=("Job/Business Loss due to COVID-19") 
-putexcel C21=("18-29") D21=("30-39") E21=("40-49") F21=("50-59") G21=("60-69") H21=("70 & over") I21=(".")
-putexcel K21=("18-29") L21=("30-39") M21=("40-49") N21=("50-59") O21=("60-69") P21=("70 & over") Q21=(".")
+putexcel C21=("18-29") D21=("30-39") E21=("40-49") F21=("50-59") G21=("60-69") H21=("70 & over") I21=("Missing")
+putexcel K21=("18-29") L21=("30-39") M21=("40-49") N21=("50-59") O21=("60-69") P21=("70 & over") Q21=("Missing")
 putexcel B22=matrix(names) C22=matrix(freq) K22=matrix(freq/r(N)*100)
-putexcel B22=("Yes") B23=("No") B24=(".")
+putexcel B22=("Yes") B23=("No") B24=("Missing")
 putexcel C26= matrix(T) B26 = ("Total") 
 
 *Using savings to pay bills
@@ -2307,10 +2312,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("EconomicAspects") modify 
 putexcel C28=("Frequency") K28=("Percent") 
 putexcel B29=("Savings to pay bills") 
-putexcel C29=("18-29") D29=("30-39") E29=("40-49") F29=("50-59") G29=("60-69") H29=("70 & over") I29=(".")
-putexcel K29=("18-29") L29=("30-39") M29=("40-49") N29=("50-59") O29=("60-69") P29=("70 & over") Q29=(".")
+putexcel C29=("18-29") D29=("30-39") E29=("40-49") F29=("50-59") G29=("60-69") H29=("70 & over") I29=("Missing")
+putexcel K29=("18-29") L29=("30-39") M29=("40-49") N29=("50-59") O29=("60-69") P29=("70 & over") Q29=("Missing")
 putexcel B30=matrix(names) C30=matrix(freq) K30=matrix(freq/r(N)*100)
-putexcel B30=("Less than 1 month") B31=("1 to 2 months") B32=("2 to 3 months") B33=("4 to 5 months") B34=("6 months") B35=("More than 6 months") B36=("Not applicable") B37=("Other") B38=(".")
+putexcel B30=("Less than 1 month") B31=("1 to 2 months") B32=("2 to 3 months") B33=("4 to 5 months") B34=("6 months") B35=("More than 6 months") B36=("Not applicable") B37=("Other") B38=("Missing")
 putexcel C40= matrix(T) B40 = ("Total") 
 
 *Ability to work from home
@@ -2321,10 +2326,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("EconomicAspects") modify 
 putexcel C43=("Frequency") K43=("Percent") 
 putexcel B44=("Working from home") 
-putexcel C44=("18-29") D44=("30-39") E44=("40-49") F44=("50-59") G44=("60-69") H44=("70 & over") I44=(".")
-putexcel K44=("18-29") L44=("30-39") M44=("40-49") N44=("50-59") O44=("60-69") P44=("70 & over") Q44=(".")
+putexcel C44=("18-29") D44=("30-39") E44=("40-49") F44=("50-59") G44=("60-69") H44=("70 & over") I44=("Missing")
+putexcel K44=("18-29") L44=("30-39") M44=("40-49") N44=("50-59") O44=("60-69") P44=("70 & over") Q44=("Missing")
 putexcel B45=matrix(names) C45=matrix(freq) K45=matrix(freq/r(N)*100)
-putexcel B45=("Yes") B46=("No") B47=("Don't know") B48=("Not applicable") B49=("Other") B50=(".")
+putexcel B45=("Yes") B46=("No") B47=("Don't know") B48=("Not applicable") B49=("Other") B50=("Missing")
 putexcel C52= matrix(T) B52=("Total") 
 
 *Ability to study from home
@@ -2335,10 +2340,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("EconomicAspects") modify 
 putexcel C55=("Frequency") K55=("Percent")
 putexcel B56=("Studying from home") 
-putexcel C56=("18-29") D56=("30-39") E56=("40-49") F56=("50-59") G56=("60-69") H56=("70 & over") I56=(".")
-putexcel K56=("18-29") L56=("30-39") M56=("40-49") N56=("50-59") O56=("60-69") P56=("70 & over") Q56=(".")
+putexcel C56=("18-29") D56=("30-39") E56=("40-49") F56=("50-59") G56=("60-69") H56=("70 & over") I56=("Missing")
+putexcel K56=("18-29") L56=("30-39") M56=("40-49") N56=("50-59") O56=("60-69") P56=("70 & over") Q56=("Missing")
 putexcel B57=matrix(names) C57=matrix(freq) K57=matrix(freq/r(N)*100)
-putexcel B57=("Yes") B58=("No") B59=("Don't know") B60=("Not applicable") B61=("Other") B62=(".")
+putexcel B57=("Yes") B58=("No") B59=("Don't know") B60=("Not applicable") B61=("Other") B62=("Missing")
 putexcel C64= matrix(T) B64=("Total") 
 
 *Healthcare Worker
@@ -2349,10 +2354,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("EconomicAspects") modify
 putexcel C67=("Frequency") K67=("Percent")
 putexcel B68=("Healthcare Worker") 
-putexcel C68=("18-29") D68=("30-39") E68=("40-49") F68=("50-59") G68=("60-69") H68=("70 & over") I68=(".")
-putexcel K68=("18-29") L68=("30-39") M68=("40-49") N68=("50-59") O68=("60-69") P68=("70 & over") Q68=(".")
+putexcel C68=("18-29") D68=("30-39") E68=("40-49") F68=("50-59") G68=("60-69") H68=("70 & over") I68=("Missing")
+putexcel K68=("18-29") L68=("30-39") M68=("40-49") N68=("50-59") O68=("60-69") P68=("70 & over") Q68=("Missing")
 putexcel B69=matrix(names) C69=matrix(freq) K69=matrix(freq/r(N)*100)
-putexcel B69=("Yes") B70=("No") B71=(".")
+putexcel B69=("Yes") B70=("No") B71=("Missing")
 putexcel C73= matrix(T) B73 = ("Total") 
 
 *Essential Worker
@@ -2363,10 +2368,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("EconomicAspects") modify 
 putexcel C76=("Frequency") K76=("Percent")
 putexcel B77=("Essential Worker") 
-putexcel C77=("18-29") D77=("30-39") E77=("40-49") F77=("50-59") G77=("60-69") H77=("70 & over") I77=(".")
-putexcel K77=("18-29") L77=("30-39") M77=("40-49") N77=("50-59") O77=("60-69") P77=("70 & over") Q77=(".")
+putexcel C77=("18-29") D77=("30-39") E77=("40-49") F77=("50-59") G77=("60-69") H77=("70 & over") I77=("Missing")
+putexcel K77=("18-29") L77=("30-39") M77=("40-49") N77=("50-59") O77=("60-69") P77=("70 & over") Q77=("Missing")
 putexcel B78=matrix(names) C78=matrix(freq) K78=matrix(freq/r(N)*100)
-putexcel B78=("Yes") B79=("No") B80=(".")
+putexcel B78=("Yes") B79=("No") B80=("Missing")
 putexcel C82= matrix(T) B82 = ("Total") 
 
 *-------------------------------------------------------------------------------
@@ -2397,7 +2402,7 @@ putexcel B11=("Cancer")
 putexcel B12=("Mental Disease")
 putexcel B13=("Other")
 putexcel B14=("No chronic conditions")
-putexcel B15=(".")
+putexcel B15=("Missing")
 putexcel B17=("Total")
 
 *-------------------------------------------------------------------------------
@@ -2412,10 +2417,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("AttitudesToCovid") modify 
 putexcel C5=("Frequency") K5=("Percent")
 putexcel B6=("Worried about COVID-19") 
-putexcel C6=("18-29") D6=("30-39") E6=("40-49") F6=("50-59") G6=("60-69") H6=("70 & over") I6=(".")
-putexcel K6=("18-29") L6=("30-39") M6=("40-49") N6=("50-59") O6=("60-69") P6=("70 & over") Q6=(".")
+putexcel C6=("18-29") D6=("30-39") E6=("40-49") F6=("50-59") G6=("60-69") H6=("70 & over") I6=("Missing")
+putexcel K6=("18-29") L6=("30-39") M6=("40-49") N6=("50-59") O6=("60-69") P6=("70 & over") Q6=("Missing")
 putexcel B7=matrix(names) C7=matrix(freq) K7=matrix(freq/r(N)*100)
-putexcel B7=("Very worried") B8=("Fairly worried") B9=("Not very worried") B10=("Don't know") B11=(".") 
+putexcel B7=("Very worried") B8=("Fairly worried") B9=("Not very worried") B10=("Don't know") B11=("Missing") 
 putexcel C13= matrix(T) B13= ("Total") 
 
 *Interested in getting tested
@@ -2426,10 +2431,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("AttitudesToCovid") modify 
 putexcel C16=("Frequency") K16=("Percent")
 putexcel B17=("If you haven't been tested would you likely to be tested") 
-putexcel C17=("18-29") D17=("30-39") E17=("40-49") F17=("50-59") G17=("60-69") H17=("70 & over") I17=(".")
-putexcel K17=("18-29") L17=("30-39") M17=("40-49") N17=("50-59") O17=("60-69") P17=("70 & over") Q17=(".")
+putexcel C17=("18-29") D17=("30-39") E17=("40-49") F17=("50-59") G17=("60-69") H17=("70 & over") I17=("Missing")
+putexcel K17=("18-29") L17=("30-39") M17=("40-49") N17=("50-59") O17=("60-69") P17=("70 & over") Q17=("Missing")
 putexcel B18=matrix(names) C18=matrix(freq) K18=matrix(freq/r(N)*100)
-putexcel B18=("Yes") B19=("No") B20=(".") 
+putexcel B18=("Yes") B19=("No") B20=("Missing") 
 putexcel C22= matrix(T) B22= ("Total") 
 
 *Likely infected under Barbados current preventive measures
@@ -2440,10 +2445,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("AttitudesToCovid") modify 
 putexcel C25=("Frequency") K25=("Percent")
 putexcel B26=("Likely infected under Barbados current preventive measures") 
-putexcel C26=("18-29") D26=("30-39") E26=("40-49") F26=("50-59") G26=("60-69") H26=("70 & over") I26=(".")
-putexcel K26=("18-29") L26=("30-39") M26=("40-49") N26=("50-59") O26=("60-69") P26=("70 & over") Q26=(".")
+putexcel C26=("18-29") D26=("30-39") E26=("40-49") F26=("50-59") G26=("60-69") H26=("70 & over") I26=("Missing")
+putexcel K26=("18-29") L26=("30-39") M26=("40-49") N26=("50-59") O26=("60-69") P26=("70 & over") Q26=("Missing")
 putexcel B27=matrix(names) C27=matrix(freq) K27=matrix(freq/r(N)*100)
-putexcel B27=("Very likely") B28=("Fairly likely") B29=("Neither likely or unlikely") B30=("Fairly unlikely") B31=("Very unlikely") B32=("Don't know") B33=(".")
+putexcel B27=("Very likely") B28=("Fairly likely") B29=("Neither likely or unlikely") B30=("Fairly unlikely") B31=("Very unlikely") B32=("Don't know") B33=("Missing")
 putexcel C34= matrix(T) B34= ("Total") 
 
 *Expectation of effect of COVID-19 if infected
@@ -2454,10 +2459,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("AttitudesToCovid") modify 
 putexcel C37=("Frequency") K37=("Percent")
 putexcel B38=("Expectation if infected with COVID-19") 
-putexcel C38=("18-29") D38=("30-39") E38=("40-49") F38=("50-59") G38=("60-69") H38=("70 & over") I38=(".")
-putexcel K38=("18-29") L38=("30-39") M38=("40-49") N38=("50-59") O38=("60-69") P38=("70 & over") Q38=(".")
+putexcel C38=("18-29") D38=("30-39") E38=("40-49") F38=("50-59") G38=("60-69") H38=("70 & over") I38=("Missing")
+putexcel K38=("18-29") L38=("30-39") M38=("40-49") N38=("50-59") O38=("60-69") P38=("70 & over") Q38=("Missing")
 putexcel B39=matrix(names) C39=matrix(freq) K39=matrix(freq/r(N)*100)
-putexcel B39=("Life-threatening") B40=("Severe") B41=("Moderate") B42=("Mild") B43=("No symptoms") B44=("Don't know") B45=(".")
+putexcel B39=("Life-threatening") B40=("Severe") B41=("Moderate") B42=("Mild") B43=("No symptoms") B44=("Don't know") B45=("Missing")
 putexcel C47= matrix(T) B47= ("Total") 
 
 *Protective Measures against COVID-19 transmission
@@ -2540,10 +2545,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("AttitudesToCovid") modify 
 putexcel C80=("Frequency") K80=("Percent")
 putexcel B81=("Ability to Self Isolate") 
-putexcel C81=("18-29") D81=("30-39") E81=("40-49") F81=("50-59") G81=("60-69") H81=("70 & over") I81=(".")
-putexcel K81=("18-29") L81=("30-39") M81=("40-49") N81=("50-59") O81=("60-69") P81=("70 & over") Q81=(".")
+putexcel C81=("18-29") D81=("30-39") E81=("40-49") F81=("50-59") G81=("60-69") H81=("70 & over") I81=("Missing")
+putexcel K81=("18-29") L81=("30-39") M81=("40-49") N81=("50-59") O81=("60-69") P81=("70 & over") Q81=("Missing")
 putexcel B82=matrix(names) C82=matrix(freq) K82=matrix(freq/r(N)*100)
-putexcel B82=("Yes I would") B83=("No I wouldn't") B84=("Don't know") B85=(".") 
+putexcel B82=("Yes I would") B83=("No I wouldn't") B84=("Don't know") B85=("Missing") 
 putexcel C87= matrix(T) B87= ("Total") 
 
 *Willingness to self isolate
@@ -2554,10 +2559,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("AttitudesToCovid") modify 
 putexcel C90=("Frequency") K90=("Percent")
 putexcel B91=("Willingness to Self Isolate") 
-putexcel C91=("18-29") D91=("30-39") E91=("40-49") F91=("50-59") G91=("60-69") H91=("70 & over") I91=(".")
-putexcel K91=("18-29") L91=("30-39") M91=("40-49") N91=("50-59") O91=("60-69") P91=("70 & over") Q91=(".")
+putexcel C91=("18-29") D91=("30-39") E91=("40-49") F91=("50-59") G91=("60-69") H91=("70 & over") I91=("Missing")
+putexcel K91=("18-29") L91=("30-39") M91=("40-49") N91=("50-59") O91=("60-69") P91=("70 & over") Q91=("Missing")
 putexcel B92=matrix(names) C92=matrix(freq) K92=matrix(freq/r(N)*100)
-putexcel B92=("Yes I would") B93=("No I wouldn't") B94=("Don't know") B95=(".") 
+putexcel B92=("Yes I would") B93=("No I wouldn't") B94=("Don't know") B95=("Missing") 
 putexcel C97= matrix(T) B97= ("Total") 
 
 *-------------------------------------------------------------------------------
@@ -2644,7 +2649,7 @@ putexcel B26=("Impact on education")
 putexcel B27=("Don't know")
 putexcel B28=("No problems")
 putexcel B29=("Other")
-putexcel B30=(".")
+putexcel B30=("Missing")
 putexcel B32=("Total")
 
 *-------------------------------------------------------------------------------
@@ -2749,7 +2754,7 @@ putexcel B32=("My family or friends" )
 putexcel B33=("Work / school / college communications" )
 putexcel B34=("I am not getting any information" )
 putexcel B35=("Other" )
-putexcel B36=(".")
+putexcel B36=("Missing")
 putexcel B38=("Total")
 
 
@@ -2784,7 +2789,7 @@ putexcel B53=("NPIs (Other Countries)" )
 putexcel B54=("NPIs (International organizations)" )
 putexcel B55=("I do want to receive any information" )
 putexcel B56=("Other")
-putexcel B57=(".")
+putexcel B57=("Missing")
 putexcel B59=("Total")
 
 *Misconceptions
@@ -2800,10 +2805,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("Knowledge") modify 
 putexcel C66=("Frequency") K66=("Percent")
 putexcel B67=("COVID-19 Bioterrorism") 
-putexcel C67=("18-29") D67=("30-39") E67=("40-49") F67=("50-59") G67=("60-69") H67=("70 & over") I67=(".")
-putexcel K67=("18-29") L67=("30-39") M67=("40-49") N67=("50-59") O67=("60-69") P67=("70 & over") Q67=(".")
+putexcel C67=("18-29") D67=("30-39") E67=("40-49") F67=("50-59") G67=("60-69") H67=("70 & over") I67=("Missing")
+putexcel K67=("18-29") L67=("30-39") M67=("40-49") N67=("50-59") O67=("60-69") P67=("70 & over") Q67=("Missing")
 putexcel B68=matrix(names) C68=matrix(freq) K68=matrix(freq/r(N)*100)
-putexcel B68=("Likely") B69=("Unlikely") B70=(".") 
+putexcel B68=("Likely") B69=("Unlikely") B70=("Missing") 
 putexcel C72= matrix(T) B72= ("Total") 
 
 **
@@ -2817,10 +2822,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("Knowledge") modify 
 putexcel C75=("Frequency") K75=("Percent")
 putexcel B76=("Eating foods imported from China") 
-putexcel C76=("18-29") D76=("30-39") E76=("40-49") F76=("50-59") G76=("60-69") H76=("70 & over") I76=(".")
-putexcel K76=("18-29") L76=("30-39") M76=("40-49") N76=("50-59") O76=("60-69") P76=("70 & over") Q76=(".")
+putexcel C76=("18-29") D76=("30-39") E76=("40-49") F76=("50-59") G76=("60-69") H76=("70 & over") I76=("Missing")
+putexcel K76=("18-29") L76=("30-39") M76=("40-49") N76=("50-59") O76=("60-69") P76=("70 & over") Q76=("Missing")
 putexcel B77=matrix(names)  K77=matrix(freq/r(N)*100)
-putexcel B77=("Likely") B78=("Unlikely") B79=("Neither likely or unlikely") B80=("Don't know") B81=(".") 
+putexcel B77=("Likely") B78=("Unlikely") B79=("Neither likely or unlikely") B80=("Don't know") B81=("Missing") 
 putexcel C83= matrix(T) B83= ("Total") 
 
 *Using products imported from China
@@ -2831,10 +2836,10 @@ mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_ByAgeGrp.xlsx", sheet("Knowledge") modify 
 putexcel C85=("Frequency") K85=("Percent")
 putexcel B86=("Using products imported from China")
-putexcel C86=("18-29") D86=("30-39") E86=("40-49") F86=("50-59") G86=("60-69") H86=("70 & over") I86=(".")
-putexcel K86=("18-29") L86=("30-39") M86=("40-49") N86=("50-59") O86=("60-69") P86=("70 & over") Q86=(".")
+putexcel C86=("18-29") D86=("30-39") E86=("40-49") F86=("50-59") G86=("60-69") H86=("70 & over") I86=("Missing")
+putexcel K86=("18-29") L86=("30-39") M86=("40-49") N86=("50-59") O86=("60-69") P86=("70 & over") Q86=("Missing")
 putexcel B87=matrix(names) K87=matrix(freq/r(N)*100)
-putexcel B87=("Likely") B88=("Unlikely") B89=("Neither likely or unlikely") B90=("Don't know") B91=(".") 
+putexcel B87=("Likely") B88=("Unlikely") B89=("Neither likely or unlikely") B90=("Don't know") B91=("Missing") 
 putexcel C93= matrix(T) B93= ("Total") 
 
 *-------------------------------------------------------------------------------
