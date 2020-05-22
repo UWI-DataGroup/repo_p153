@@ -432,9 +432,91 @@ graph export "`outputpath'/lockdown_combine.png", replace
     ;
 #delimit cr
 
+graph export "`outputpath'/protection_overall.png", replace 
+
+*-------------------------------------------------------------------------------
+
+#delimit ;
+			mrgraph hbar  q0079_0001 q0079_0002 q0079_0003 q0079_0004 q0079_0005
+						  q0079_0006 q0079_0007 q0079_0008 q0079_0009 q0079_0010
+						  q0079_0011 q0079_0012 q0079_0013 q0079_0014
+						  , 
+			 
+			includemissing 
+			response(1)
+			width(15) 
+			stat(column) 
+			title(COVID-19 Information Source, c(black) size(4)) 
+			ylabel(0(10)40,angle(0) nogrid labs(3)) yscale(fill range(0(10)40)) 
+			
+			ytitle(Percent (%))
+			 
+			
+			oversubopts(
+			
+			label(labsize(tiny))
+		
+			)
+			
+			blabel(bar, size(vsmall) format(%4.1f))
+			
+			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
+			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
+			
+			bar(1, color(brown) fintensity(inten70)) 
+			
+	name(info_source_overall, replace)
+	saving(info_source_overall, replace)
+
+
+    ;
+#delimit cr
+
+graph export "`outputpath'/info_source_overall.png", replace 
+
 *-------------------------------------------------------------------------------
 *-------------------------------------------------------------------------------
 
+#delimit ;
+			mrgraph hbar  q0080_0001 q0080_0002 q0080_0003 q0080_0004 q0080_0005 
+						  q0080_0006 q0080_0007 q0080_0008 q0080_0009 q0080_0010
+						  q0080_0011 q0080_0012 q0080_0013 q0080_0014 q0080_0015
+						  , 
+			 
+			includemissing 
+			response(1)
+			width(15) 
+			stat(column) 
+			title(COVID-19 Information Dissemination Preference, c(black) size(4)) 
+			ylabel(0(10)40,angle(0) nogrid labs(3)) yscale(fill range(0(10)40)) 
+			
+			ytitle(Percent (%))
+			 
+			
+			oversubopts(
+			
+			label(labsize(tiny))
+		
+			)
+			
+			blabel(bar, size(vsmall) format(%4.1f))
+			
+			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
+			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
+			
+			bar(1, color(dkgreen) fintensity(inten70)) 
+			
+	name(info_preference_overall, replace)
+	saving(info_preference_overall, replace)
+
+
+    ;
+#delimit cr
+
+graph export "`outputpath'/info_preference_overall.png", replace 
+
+*-------------------------------------------------------------------------------
+*-------------------------------------------------------------------------------
 //Useful graph which may be needed later on
 /*
 *Employment loss during COVID-19
