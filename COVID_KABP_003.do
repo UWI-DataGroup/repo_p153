@@ -431,3 +431,26 @@ graph export "`outputpath'/lockdown_combine.png", replace
 
     ;
 #delimit cr
+
+*-------------------------------------------------------------------------------
+*-------------------------------------------------------------------------------
+
+//Useful graph which may be needed later on
+/*
+*Employment loss during COVID-19
+#delimit ;
+catplot job_loss employment,
+percent(employment) 
+var1opts(label(labsize(small))) 
+var2opts(label(labsize(small)) relabel(`r(relabel)')) 
+ytitle("Percent of Respondents by COVID job loss", size(small)) 
+title("Employment lost during COVID" 
+, span size(medium)) 
+blabel(bar, format(%4.1f)) 
+caption("Missing = 1008 responses", span size(vsmall)) 
+intensity(75) 
+asyvars
+bar(1, color(maroon) fintensity(inten100)) 
+bar(2, color(green) fintensity(inten100)) 
+    ;
+#delimit cr
