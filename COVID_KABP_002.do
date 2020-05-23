@@ -1702,71 +1702,79 @@ putexcel C92= matrix(T) B92= ("Total") D92=(100)
 
 *-------------------------------------------------------------------------------
 
+// Descriptives by Sex/Gender
+
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Demographics") replace
 
+*Note: Female= 2958; Male= 1324
 
 *-------------------------------------------------------------------------------
 
 // Demographics
 
 *Age Groups
-tabulate agegrp sex, col miss matcell(freq) matrow(names)
-matrix list freq
+tabulate agegrp if sex==1,  miss matcell(freq_f) matrow(names) // Female
+tabulate agegrp if sex==2,  miss matcell(freq_m) matrow(names) // Male
+matrix list freq_f
+matrix list freq_m
 matrix list names
-mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Demographics") modify
 putexcel C13=("Frequency") G13=("Percent")
 putexcel B14=("Age Groups") 
 putexcel C14=("Female") D14=("Male") E14=("Missing")  // Frequency
 putexcel G14=("Female") H14=("Male") I14=("Missing")	// Percentage
-putexcel B15=matrix(names) C15=matrix(freq) G15=matrix(freq/r(N)*100)
+putexcel B15=matrix(names) C15=matrix(freq_f) D15=matrix(freq_m)      
+putexcel G15=matrix(freq_f/2958*100)  H15=matrix(freq_m/1324*100)
 putexcel B15=("18-29") B16=("30-39") B17=("40-49") B18=("50-59") B19=("60-69") B20=("70 & over") B21=("Missing") B23 = ("Total") 
-putexcel C23= matrix(T)
+putexcel C23= 4522
 
 *Education
-tabulate education sex, miss matcell(freq) matrow(names)
-matrix list freq
+tabulate education if sex==1, miss matcell(freq_f) matrow(names) // Female
+tabulate education if sex==2, miss matcell(freq_m) matrow(names) // Male
+matrix list freq_f
+matrix list freq_m
 matrix list names
-mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Demographics") modify
 putexcel C26=("Frequency") G26=("Percent") 
 putexcel B27=("Education") 
 putexcel C27=("Female") D27=("Male") E27=("Missing") // Frequency
 putexcel G27=("Female") H27=("Male") I27=("Missing") // Percentage
-putexcel B28=matrix(names) C28=matrix(freq) G28=matrix(freq/r(N)*100)
+putexcel B28=matrix(names) C28=matrix(freq_f) D28=matrix(freq_m) 
+putexcel G28=matrix(freq_f/2958*100)  H28=matrix(freq_m/1324*100)
 putexcel B28=("Primary") B29=("Secondary") B30=("Polytechnic/BCC") B31=("University") B32=("Missing") B34 = ("Total") 
-putexcel C34= matrix(T)
+putexcel C34= 4522
 
 *Religion
-tabulate religion sex, miss matcell(freq) matrow(names)
-matrix list freq
+tabulate religion if sex==1, miss matcell(freq_f) matrow(names) // Female
+tabulate religion if sex==2, miss matcell(freq_m) matrow(names) // Male
+matrix list freq_f
+matrix list freq_m
 matrix list names
-mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Demographics") modify 
 putexcel C36=("Frequency") G36=("Percent") 
 putexcel B37=("Religion") 
 putexcel C37=("Female") D37=("Male") E37=("Missing") // Frequency
 putexcel G37=("Female") H37=("Male") I37=("Missing") // Percentage
-putexcel B38=matrix(names) C38=matrix(freq) G38=matrix(freq/r(N)*100)
+putexcel B38=matrix(names) C38=matrix(freq_f)  D38=matrix(freq_m)
+putexcel G38=matrix(freq_f/2958*100)  H38=matrix(freq_m/1324*100)
 putexcel B38=("Anglican") B39=("Roman Catholic") B40=("Baptist") B41=("Seventh Day Adventist") ///
 			B42=("Muslim") B43 = ("Rastafarian") B44 =("Hindu") B45 =("Other") B46=("Missing") B48=("Total") 
-putexcel C48= matrix(T)
+putexcel C48= 4522
 
 *Parent and Guardians
-mrtab q0020_0001 - q0020_0008, by(sex) nonames 
-matlist r(responses)
-matrix freq = r(responses)
-matrix miss = r(N_miss)
-matrix T = r(N)
-matlist freq
-matlist miss
-matlist T
+mrtab q0020_0001 - q0020_0008 if sex==1,  nonames 
+matrix freq_f = r(responses)
+mrtab q0020_0001 - q0020_0008 if sex==2,  nonames 
+matrix freq_m = r(responses)
+matlist freq_f
+matlist freq_m
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("Demographics") modify 
 putexcel C51=("Frequency") G51=("Percent")
 putexcel B52=("Dependant Parent/Guardian")
 putexcel C52=("Female") D52=("Male")  // Frequency
 putexcel G52=("Female") H52=("Male")  // Percentage
-putexcel C53=matrix(freq) G53=matrix(freq/4522*100) 
+putexcel C53=matrix(freq_f) D53=matrix(freq_m)
+putexcel G53=matrix(freq_f/2958*100)  H53=matrix(freq_m/1324*100)
 putexcel B53=("Under 6 months old")
 putexcel B54=("Between 6 and 12 months" )
 putexcel B55=("More than 1 year to 5 years old" )
@@ -1781,102 +1789,116 @@ putexcel B60=("I do not have children")
 //Economic Aspects
 
 *Employment
-tabulate employment sex, miss matcell(freq) matrow(names)
-matrix list freq
+tabulate employment if sex==1, miss matcell(freq_f) matrow(names) // Female
+tabulate employment if sex==2, miss matcell(freq_m) matrow(names) // Male
+matrix list freq_f
+matrix list freq_m
 matrix list names
-mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C5=("Frequency") G5=("Percent") 
 putexcel B6=("Employment Categories")
 putexcel C6=("Female") D6=("Male") E6=("Missing") // Frequency
 putexcel G6=("Female") H6=("Male") I6=("Missing") // Percentage
-putexcel B7=matrix(names) C7=matrix(freq) G7=matrix(freq/r(N)*100)
+putexcel B7=matrix(names) C7=matrix(freq_f)  D7=matrix(freq_m)
+putexcel G7=matrix(freq_f/2958*100) H7=matrix(freq_m/1324*100)
 putexcel B7=("Working full-time") B8=("Working part-time") B9=("Full-time student") B10=("Retired") B11=("Self-employed") B12=("Unemployed NOT seeking work") B13=("Unemployed and seeking work") B14=("Other") B15=("Missing")
-putexcel C17= matrix(T) B17= ("Total") 
+putexcel C17= 4522 B17= ("Total") 
 
 *Job/Business loss due to COVID-19
-tabulate job_loss sex, miss matcell(freq) matrow(names)
-matrix list freq
+tabulate job_loss if sex==1, miss matcell(freq_f) matrow(names) // Females
+tabulate job_loss if sex==2, miss matcell(freq_m) matrow(names) // Males
+matrix list freq_f
+matrix list freq_m
 matrix list names
-mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C20=("Frequency") G20=("Percent") 
 putexcel B21=("Job/Business Loss due to COVID-19") 
 putexcel C21=("Female") D21=("Male") E21=("Missing") // Frequency
 putexcel G21=("Female") H21=("Male") I21=("Missing") // Percentage
-putexcel B22=matrix(names) C22=matrix(freq) G22=matrix(freq/r(N)*100)
+putexcel B22=matrix(names) C22=matrix(freq_f) D22=matrix(freq_m)
+putexcel G22=matrix(freq_f/2958*100) H22=matrix(freq_m/1324*100)
 putexcel B22=("Yes") B23=("No") B24=("Missing")
-putexcel C26= matrix(T) B26 = ("Total") 
+putexcel C26= 4522 B26 = ("Total") 
 
 *Using savings to pay bills
-tabulate save_bills sex, miss matcell(freq) matrow(names)
-matrix list freq
+tabulate save_bills if sex==1, miss matcell(freq_f) matrow(names) // Female
+tabulate save_bills if sex==2, miss matcell(freq_m) matrow(names) // Male
+matrix list freq_f
+matrix list freq_m
 matrix list names
-mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C28=("Frequency") G28=("Percent") 
 putexcel B29=("Savings to pay bills") 
 putexcel C29=("Female") D29=("Male") E29=("Missing") // Frequency
 putexcel G29=("Female") H29=("Male") I29=("Missing") // Percentage
-putexcel B30=matrix(names) C30=matrix(freq) G30=matrix(freq/r(N)*100)
+putexcel B30=matrix(names) C30=matrix(freq_f) D30=matrix(freq_m) 
+putexcel G30=matrix(freq_f/2958*100) H30=matrix(freq_m/1324*100)
 putexcel B30=("Less than 1 month") B31=("1 to 2 months") B32=("2 to 3 months") B33=("4 to 5 months") B34=("6 months") B35=("More than 6 months") B36=("Not applicable") B37=("Other") B38=("Missing")
-putexcel C40= matrix(T) B40 = ("Total") 
+putexcel C40= 4522 B40 = ("Total") 
 
 *Ability to work from home
-tabulate work_home sex, miss matcell(freq) matrow(names)
-matrix list freq
+tabulate work_home if sex==1, miss matcell(freq_f) matrow(names)
+tabulate work_home if sex==2, miss matcell(freq_m) matrow(names)
+matrix list freq_f
+matrix list freq_m
 matrix list names
-mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C43=("Frequency") G43=("Percent") 
 putexcel B44=("Working from home") 
 putexcel C44=("Female") D44=("Male") E44=("Missing") // Frequency
 putexcel G44=("Female") H44=("Male") I44=("Missing") // Percentage
-putexcel B45=matrix(names) C45=matrix(freq) G45=matrix(freq/r(N)*100)
+putexcel B45=matrix(names) C45=matrix(freq) 
+putexcel G45=matrix(freq_f/2958*100) H45=matrix(freq_m/1324*100)
 putexcel B45=("Yes") B46=("No") B47=("Don't know") B48=("Not applicable") B49=("Other") B50=("Missing")
-putexcel C52= matrix(T) B52=("Total") 
+putexcel C52= 4522 B52=("Total") 
 
 *Ability to study from home
-tabulate study_home sex, miss matcell(freq) matrow(names)
-matrix list freq
+tabulate study_home if sex==1, miss matcell(freq_f) matrow(names) // Female
+tabulate study_home if sex==2, miss matcell(freq_m) matrow(names) // Male
+matrix list freq_f
+matrix list freq_m
 matrix list names
-mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C55=("Frequency") G55=("Percent")
 putexcel B56=("Studying from home") 
 putexcel C56=("Female") D56=("Male") E56=("Missing") // Frequency
 putexcel G56=("Female") H56=("Male") I56=("Missing") // Percentage
-putexcel B57=matrix(names) C57=matrix(freq) G57=matrix(freq/r(N)*100)
+putexcel B57=matrix(names) C57=matrix(freq_f) D57=matrix(freq_m)
+putexcel G57=matrix(freq_f/2958*100) H57=matrix(freq_m/1324*100)
 putexcel B57=("Yes") B58=("No") B59=("Don't know") B60=("Not applicable") B61=("Other") B62=("Missing")
-putexcel C64= matrix(T) B64=("Total") 
+putexcel C64= 4522 B64=("Total") 
 
 *Healthcare Worker
-tabulate health_worker sex, miss matcell(freq) matrow(names)
-matrix list freq
+tabulate health_worker if sex==1, miss matcell(freq_f) matrow(names) // Female
+tabulate health_worker if sex==2, miss matcell(freq_2) matrow(names) // Male
+matrix list freq_f
+matrix list freq_m
 matrix list names
-mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify
 putexcel C67=("Frequency") G67=("Percent")
 putexcel B68=("Healthcare Worker") 
 putexcel C68=("Female") D68=("Male") E68=("Missing") // Frequency
 putexcel G68=("Female") H68=("Male") I68=("Missing") // Percentage
-putexcel B69=matrix(names) C69=matrix(freq) G69=matrix(freq/r(N)*100)
+putexcel B69=matrix(names) C69=matrix(freq_f) D69=matrix(freq_m) 
+putexcel G69=matrix(freq_f/2958*100) H69=matrix(freq_m/1324*100)
 putexcel B69=("Yes") B70=("No") B71=("Missing")
-putexcel C73= matrix(T) B73 = ("Total") 
+putexcel C73= 4522 B73 = ("Total") 
 
 *Essential Worker
-tabulate essential_worker sex, miss matcell(freq) matrow(names)
-matrix list freq
+tabulate essential_worker if sex==1, miss matcell(freq) matrow(names) // Female
+tabulate essential_worker if sex==2, miss matcell(freq) matrow(names) // Male
+matrix list freq_f
+matrix list freq_m
 matrix list names
-mat T = r(N)
 putexcel set "`outputpath'/MoHWReportResults_BySex.xlsx", sheet("EconomicAspects") modify 
 putexcel C76=("Frequency") G76=("Percent")
 putexcel B77=("Essential Worker") 
 putexcel C77=("Female") D77=("Male") E77=("Missing") // Frequency
 putexcel G77=("Female") H77=("Male") I77=("Missing") // Percentage
-putexcel B78=matrix(names) C78=matrix(freq) G78=matrix(freq/r(N)*100)
+putexcel B78=matrix(names) C78=matrix(freq_f)  D78=matrix(freq_m) 
+putexcel G78=matrix(freq_f/2958*100) H78=matrix(freq_m/1324*100)
 putexcel B78=("Yes") B79=("No") B80=("Missing")
-putexcel C82= matrix(T) B82 = ("Total") 
+putexcel C82= 4522 B82 = ("Total") 
 
 *-------------------------------------------------------------------------------
 
