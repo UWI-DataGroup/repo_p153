@@ -8,7 +8,7 @@ cls
 **  Analyst:		Kern Rocke
 **	Date Created:	22/05/2020
 **	Date Modified: 	22 /05/2020
-**  Algorithm Task: HADS Analysis 
+**  Algorithm Task: HADS Analysis (Hospitality Anxiety Depression Scale)
 
 
 ** DO-FILE SET UP COMMANDS
@@ -94,5 +94,20 @@ mean depression
 tab anxiety_cat
 tab depression_cat
 
+*-------------------------------------------------------------------------------
 
+*SEM - gender and age
+cls
+sem (Anxiety -> q0035 q0037 q0039 q0041 q0044 q0045 q0047)  ////
+	 (Anxiety -> sex, ) (Anxiety -> age, ) ///
+	(Depression -> q0034 q0036 q0038 q0040 q0042 q0043 q0046 ) ///
+	(Depression -> sex, ) (Depression -> age, ), ///
+	standardized nolog
+	covstruct(_lexogenous, diagonal) vce(robust) latent(Anxiety Depression ) ///
+	cov( Anxiety*Depression) nocapslatent method(ml)
 
+*Overall goodness of fit
+estat gof, stats(all)
+	
+*Equation-level goodness of fit
+estat eqgof
