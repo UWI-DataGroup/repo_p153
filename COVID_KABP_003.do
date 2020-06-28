@@ -38,11 +38,14 @@ MAC OS
 
 *WINDOWS OS
 **Datasets to encrypted folder
-*local datapath "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
+local datapath "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
 **Graph outputs to encrypted folder
-*local outputpath "X:/The University of the West Indies/DataGroup - repo_data/data_p153/version01/3-output"
-*cd "X:/The University of the West Indies/DataGroup - repo_data/data_p153"
+local outputpath "X:/The University of the West Indies/DataGroup - repo_data/data_p153/version01/3-output"
+** LOGFILES to unencrypted OneDrive folder (.gitignore set to IGNORE log files on PUSH to GitHub)
+local logpath "X:/OneDrive - The University of the West Indies/repo_datagroup/repo_p120"
 
+
+/*
 *MAC OS
 **Datasets to encrypted folder
 local datapath "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153"
@@ -52,7 +55,7 @@ local logpath "/Volumes/Secomba/kernrocke/Boxcryptor/OneDrive - The University o
 local outputpath "/Volumes/Secomba/kernrocke/Boxcryptor/The University of the West Indies/DataGroup - PROJECT_p153/05_Outputs"
 cd "/Volumes/Secomba/kernrocke/Boxcryptor/DataGroup - repo_data/data_p153/version01/3-output"
 
-
+*/
 
 ** Close any open log files and open new log file
 capture log close
@@ -60,10 +63,11 @@ capture log close
 
 
 *Install mrtab for dealing with multiple response questions
-ssc install mrtab, replace
+*ssc install mrtab, replace
 
 *Load in data from encrypted location
 use "`datapath'/version01/2-working/BarbadosCovid19_KABP_v2.dta", clear
+
 
 
 *DEMOGRAPHICS
@@ -86,9 +90,9 @@ use "`datapath'/version01/2-working/BarbadosCovid19_KABP_v2.dta", clear
 			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
 			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
 			
-			bar(1, color(red) fintensity(inten60)) 
-			bar(2, color(blue) fintensity(inten60)) 
-			bar(3, color(green) fintensity(inten60)) 
+			bar(1, color("37 52 148") fintensity(inten100)) 
+			bar(2, color("65 182 196") fintensity(inten100)) 
+			bar(3, color("199 233 180") fintensity(inten100)) 
 			
 			title(Age Groups by Sex, c(black) size(5)) 
 			
@@ -172,7 +176,7 @@ label value employment employment
 			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
 			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
 			
-			bar(1, color(gs7) fintensity(inten60)) 
+			bar(1, color("65 182 196") fintensity(inten100)) 
 
 			
 			title(Employment Categories Distribution , c(black) size(5)) 
@@ -202,9 +206,9 @@ graph export "`outputpath'/employment_overall.png", replace
 			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
 			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
 			
-			bar(1, color(red) fintensity(inten60)) 
-			bar(2, color(blue) fintensity(inten60)) 
-			bar(3, color(green) fintensity(inten60)) 
+			bar(1, color("37 52 148") fintensity(inten100)) 
+			bar(2, color("65 182 196") fintensity(inten100)) 
+			bar(3, color("199 233 180") fintensity(inten100)) 
 			
 			title(Employment by Sex, c(black) size(5)) 
 			
@@ -261,8 +265,8 @@ tab savings agegrp, miss col
 			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
 			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
 			
-			bar(1, color(red) fintensity(inten100)) 
-			bar(2, color(blue) fintensity(inten100)) 
+			bar(1, color("37 52 148") fintensity(inten100)) 
+			bar(2, color("65 182 196") fintensity(inten100)) 
 			
 	name(current_health)
 
@@ -270,7 +274,7 @@ tab savings agegrp, miss col
 #delimit cr
 
 graph export "`outputpath'/current_health_sex.png", replace 
-
+*/
 					 
 *-------------------------------------------------------------------------------
 *-------------------------------------------------------------------------------
@@ -283,15 +287,16 @@ graph export "`outputpath'/current_health_sex.png", replace
 			over(worried, relabel(6 "Missing")) 
 			missing
 			
-			ylabel(0(10)100,angle(0) nogrid labs(3))
+			ylabel(0(10)50,angle(0) nogrid labs(3))
 			ytitle("Percent (%)")
+			ysize (4)
 			
 			blabel(bar,  position(top) format(%4.1f))
 			
 			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
 			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
 			
-			bar(1, color(gs7) fintensity(inten60)) 
+			bar(1, color("29 145 192") fintensity(inten100)) 
 
 			
 			title(Worried about COVID-19 outbreak in Barbados , c(black) size(5)) 
@@ -327,7 +332,7 @@ graph export "`outputpath'/worried_Covid_Overall.png", replace
 			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
 			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
 			
-			bar(1, color(purple) fintensity(inten60)) 
+			bar(1, color("37 52 148") fintensity(inten100)) 
 			
 	name(lockdown_prep, replace)
 	saving(lockdown_prep, replace)
@@ -361,7 +366,7 @@ graph export "`outputpath'/lockdown_prep.png", replace
 			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
 			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
 			
-			bar(1, color(orange) fintensity(inten60)) 
+			bar(1, color("127 205 187") fintensity(inten100)) 
 			
 	name(lockdown_prob, replace)
 	saving(lockdown_prob, replace)
@@ -423,7 +428,7 @@ graph export "`outputpath'/lockdown_combine.png", replace
 			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
 			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
 			
-			bar(1, color(dknavy) fintensity(inten70)) 
+			bar(1, color("8 29 88") fintensity(inten70)) 
 			
 	name(protection_overall, replace)
 	saving(protection_overall, replace)
@@ -463,7 +468,7 @@ graph export "`outputpath'/protection_overall.png", replace
 			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
 			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
 			
-			bar(1, color(brown) fintensity(inten70)) 
+			bar(1, color("37 52 148") fintensity(inten70)) 
 			
 	name(info_source_overall, replace)
 	saving(info_source_overall, replace)
@@ -476,6 +481,9 @@ graph export "`outputpath'/info_source_overall.png", replace
 
 *-------------------------------------------------------------------------------
 *-------------------------------------------------------------------------------
+label variable q0080_0002 "Common signs infection"
+label variable q0080_0003 "Less common signs infection"
+
 
 #delimit ;
 			mrgraph hbar  q0080_0001 q0080_0002 q0080_0003 q0080_0004 q0080_0005 
@@ -504,7 +512,7 @@ graph export "`outputpath'/info_source_overall.png", replace
 			plotregion(c(gs16) ic(gs16) ilw(thin) lw(thin)) 
 			graphregion(color(gs16) ic(gs16) ilw(thin) lw(thin))
 			
-			bar(1, color(dkgreen) fintensity(inten70)) 
+			bar(1, color("65 182 196") fintensity(inten70)) 
 			
 	name(info_preference_overall, replace)
 	saving(info_preference_overall, replace)
