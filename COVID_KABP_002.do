@@ -1726,7 +1726,7 @@ putexcel G14=("Female") H14=("Male") I14=("Missing")	// Percentage
 putexcel B15=matrix(names) C15=matrix(freq_f) D15=matrix(freq_m)      
 putexcel G15=matrix(freq_f/2958*100)  H15=matrix(freq_m/1324*100)
 putexcel B15=("18-29") B16=("30-39") B17=("40-49") B18=("50-59") B19=("60-69") B20=("70 & over") B21=("Missing") B23 = ("Total") 
-putexcel C23= 4522
+putexcel C23= (4522)
 
 *Education
 tabulate education if sex==1, miss matcell(freq_f) matrow(names) // Female
@@ -1742,7 +1742,7 @@ putexcel G27=("Female") H27=("Male") I27=("Missing") // Percentage
 putexcel B28=matrix(names) C28=matrix(freq_f) D28=matrix(freq_m) 
 putexcel G28=matrix(freq_f/2958*100)  H28=matrix(freq_m/1324*100)
 putexcel B28=("Primary") B29=("Secondary") B30=("Polytechnic/BCC") B31=("University") B32=("Missing") B34 = ("Total") 
-putexcel C34= 4522
+putexcel C34= (4522)
 
 *Religion
 tabulate religion if sex==1, miss matcell(freq_f) matrow(names) // Female
@@ -1759,7 +1759,7 @@ putexcel B38=matrix(names) C38=matrix(freq_f)  D38=matrix(freq_m)
 putexcel G38=matrix(freq_f/2958*100)  H38=matrix(freq_m/1324*100)
 putexcel B38=("Anglican") B39=("Roman Catholic") B40=("Baptist") B41=("Seventh Day Adventist") ///
 			B42=("Muslim") B43 = ("Rastafarian") B44 =("Hindu") B45 =("Other") B46=("Missing") B48=("Total") 
-putexcel C48= 4522
+putexcel C48= (4522)
 
 *Parent and Guardians
 mrtab q0020_0001 - q0020_0008 if sex==1,  nonames 
@@ -1802,7 +1802,7 @@ putexcel G6=("Female") H6=("Male") I6=("Missing") // Percentage
 putexcel B7=matrix(names) C7=matrix(freq_f)  D7=matrix(freq_m)
 putexcel G7=matrix(freq_f/2958*100) H7=matrix(freq_m/1324*100)
 putexcel B7=("Working full-time") B8=("Working part-time") B9=("Full-time student") B10=("Retired") B11=("Self-employed") B12=("Unemployed NOT seeking work") B13=("Unemployed and seeking work") B14=("Other") B15=("Missing")
-putexcel C17= 4522 B17= ("Total") 
+putexcel C17= (4522) B17= ("Total") 
 
 *Job/Business loss due to COVID-19
 tabulate job_loss if sex==1, miss matcell(freq_f) matrow(names) // Females
@@ -1818,7 +1818,7 @@ putexcel G21=("Female") H21=("Male") I21=("Missing") // Percentage
 putexcel B22=matrix(names) C22=matrix(freq_f) D22=matrix(freq_m)
 putexcel G22=matrix(freq_f/2958*100) H22=matrix(freq_m/1324*100)
 putexcel B22=("Yes") B23=("No") B24=("Missing")
-putexcel C26= 4522 B26 = ("Total") 
+putexcel C26= (4522) B26 = ("Total") 
 
 *Using savings to pay bills
 tabulate save_bills if sex==1, miss matcell(freq_f) matrow(names) // Female
@@ -1834,7 +1834,7 @@ putexcel G29=("Female") H29=("Male") I29=("Missing") // Percentage
 putexcel B30=matrix(names) C30=matrix(freq_f) D30=matrix(freq_m) 
 putexcel G30=matrix(freq_f/2958*100) H30=matrix(freq_m/1324*100)
 putexcel B30=("Less than 1 month") B31=("1 to 2 months") B32=("2 to 3 months") B33=("4 to 5 months") B34=("6 months") B35=("More than 6 months") B36=("Not applicable") B37=("Other") B38=("Missing")
-putexcel C40= 4522 B40 = ("Total") 
+putexcel C40= (4522) B40 = ("Total") 
 
 *Ability to work from home
 tabulate work_home if sex==1, miss matcell(freq_f) matrow(names)
@@ -1850,7 +1850,7 @@ putexcel G44=("Female") H44=("Male") I44=("Missing") // Percentage
 putexcel B45=matrix(names) C45=matrix(freq) 
 putexcel G45=matrix(freq_f/2958*100) H45=matrix(freq_m/1324*100)
 putexcel B45=("Yes") B46=("No") B47=("Don't know") B48=("Not applicable") B49=("Other") B50=("Missing")
-putexcel C52= 4522 B52=("Total") 
+putexcel C52= (4522) B52=("Total") 
 
 *Ability to study from home
 tabulate study_home if sex==1, miss matcell(freq_f) matrow(names) // Female
@@ -1866,7 +1866,7 @@ putexcel G56=("Female") H56=("Male") I56=("Missing") // Percentage
 putexcel B57=matrix(names) C57=matrix(freq_f) D57=matrix(freq_m)
 putexcel G57=matrix(freq_f/2958*100) H57=matrix(freq_m/1324*100)
 putexcel B57=("Yes") B58=("No") B59=("Don't know") B60=("Not applicable") B61=("Other") B62=("Missing")
-putexcel C64= 4522 B64=("Total") 
+putexcel C64= (4522) B64=("Total") 
 
 *Healthcare Worker
 tabulate health_worker if sex==1, miss matcell(freq_f) matrow(names) // Female
@@ -1882,7 +1882,7 @@ putexcel G68=("Female") H68=("Male") I68=("Missing") // Percentage
 putexcel B69=matrix(names) C69=matrix(freq_f) D69=matrix(freq_m) 
 putexcel G69=matrix(freq_f/2958*100) H69=matrix(freq_m/1324*100)
 putexcel B69=("Yes") B70=("No") B71=("Missing")
-putexcel C73= 4522 B73 = ("Total") 
+putexcel C73= (4522) B73 = ("Total") 
 
 *Essential Worker
 tabulate essential_worker if sex==1, miss matcell(freq) matrow(names) // Female
@@ -1898,7 +1898,7 @@ putexcel G77=("Female") H77=("Male") I77=("Missing") // Percentage
 putexcel B78=matrix(names) C78=matrix(freq_f)  D78=matrix(freq_m) 
 putexcel G78=matrix(freq_f/2958*100) H78=matrix(freq_m/1324*100)
 putexcel B78=("Yes") B79=("No") B80=("Missing")
-putexcel C82= 4522 B82 = ("Total") 
+putexcel C82= (4522) B82 = ("Total") 
 
 *-------------------------------------------------------------------------------
 
