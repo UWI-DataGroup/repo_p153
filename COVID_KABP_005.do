@@ -4,11 +4,11 @@ cls
 
 **  GENERAL DO-FILE COMMENTS
 **  Program:		COVID_KABP_005.do
-**  Project:      	COVID-19 KABP Barbados
+**  Project:      	LGTBQI COVID-19 KABP 
 **  Analyst:		Kern Rocke
 **	Date Created:	28/06/2020
 **	Date Modified: 	28/06/2020
-**  Algorithm Task: Patient Health Questionnaire-4 (for CGeorge & EAugustus)
+**  Algorithm Task: Analysis for Patient Health Questionnaire-4 (for CGeorge & EAugustus)
 
 
 ** DO-FILE SET UP COMMANDS
